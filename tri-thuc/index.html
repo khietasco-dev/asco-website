@@ -407,6 +407,48 @@ footer .soc a:hover{background:rgba(228,180,81,.2);border-color:rgba(228,180,81,
 .grid.g2 > .quote:last-child:nth-child(odd){grid-column:1/-1}
 .grid.g2 > .quote:last-child:nth-child(odd) .q{max-width:78ch}
 
+/* ---------- đội ngũ lãnh đạo ---------- */
+.ld{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:var(--shadow-xs);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.ld:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--navy-300)}
+.ld img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.ld .ten{padding:16px 18px 18px}
+.ld .ten b{display:block;font-size:16.4px;line-height:1.28}
+.ld .ten span{display:block;font-size:13.4px;color:var(--muted);margin-top:5px;line-height:1.42}
+.ld.dan-dau{grid-column:span 2}
+@media (max-width:680px){.ld.dan-dau{grid-column:span 1}}
+.ld.dan-dau{display:grid;grid-template-columns:1fr 1.15fr;align-items:center}
+@media (max-width:680px){.ld.dan-dau{grid-template-columns:1fr}}
+.ld.dan-dau .ten{padding:22px 24px}
+.ld.dan-dau .ten b{font-size:20px}
+.ld.dan-dau .ten .loi{margin-top:12px;font-size:14.6px;color:var(--ink-2);line-height:1.6}
+
+/* ---------- tuyên ngôn: sứ mệnh · tầm nhìn · giá trị ---------- */
+.creed{border-radius:var(--r-xl);padding:30px 32px;color:#fff;
+  background:linear-gradient(150deg,#2456A6,#12305F);box-shadow:var(--shadow)}
+.creed .nhan{font-size:12px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--gold-hi)}
+.creed .cau{font-size:clamp(19px,2.3vw,25px);font-weight:800;line-height:1.34;margin-top:12px;letter-spacing:-.015em}
+.creed .giai{margin-top:14px;font-size:15.2px;color:rgba(255,255,255,.8);line-height:1.62}
+.tri-gia{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.tri-gia span{font-size:16px;font-weight:800;padding:11px 22px;border-radius:999px;
+  background:rgba(228,180,81,.16);border:1px solid rgba(228,180,81,.45);color:var(--gold-hi)}
+
+/* ---------- ONEASCO ---------- */
+.one-hero{text-align:center;max-width:760px;margin:0 auto}
+.one-word{font-size:clamp(40px,7vw,86px);font-weight:800;letter-spacing:-.04em;line-height:1;
+  background:linear-gradient(100deg,var(--gold-hi),#fff 55%,var(--gold-hi));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.tru{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;
+  position:relative;overflow:hidden}
+.tru::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gold)}
+.tru .so{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--navy)}
+.tru h3{margin:10px 0 10px}
+.tru p{color:var(--ink-2);font-size:15.3px}
+
+/* ---------- sơ đồ tổ chức ---------- */
+.sodo{border:1px solid var(--line);border-radius:var(--r-lg);background:#fff;padding:14px;overflow-x:auto}
+.sodo img{width:100%;min-width:680px;height:auto;display:block}
+
 /* ---------- bộ lọc ---------- */
 .chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px}
 .chip{font:inherit;font-size:14.4px;font-weight:600;padding:9px 17px;border-radius:999px;cursor:pointer;
@@ -571,7 +613,20 @@ details.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15.3px;line-heigh
       <li><a href="../cong-cu/" data-nav="cong-cu">Công cụ</a></li>
       <li><a href="../du-an/" data-nav="du-an">Dự án</a></li>
       <li><a href="../tri-thuc/" data-nav="tri-thuc" aria-current="page">Tri thức</a></li>
-      <li><a href="../ve-asco/" data-nav="ve-asco">Về ASCO</a></li>
+      <li><a href="../oneasco/" data-nav="oneasco">ONEASCO</a></li>
+      <li>
+        <a href="../ve-asco/" data-nav="ve-asco">Về ASCO <i class="caret"></i></a>
+        <div class="mega">
+          <div class="mega-grid">
+            <a href="../ve-asco/#gioi-thieu"><b>Giới thiệu chung</b><span>Thành lập 25/9/2007 · sứ mệnh · tầm nhìn · giá trị cốt lõi</span></a>
+            <a href="../ve-asco/#ly-do"><b>Lý do chọn ASCO</b><span>Sáu điều khách hàng không tìm được ở nơi khác</span></a>
+            <a href="../ve-asco/#lanh-dao"><b>Đội ngũ lãnh đạo</b><span>Chủ tịch HĐTV và tám Phó Tổng giám đốc</span></a>
+            <a href="../ve-asco/#co-cau"><b>Cơ cấu tổ chức</b><span>Sơ đồ tổ chức và các khối chuyên môn</span></a>
+            <a href="../ve-asco/#mang-luoi"><b>Mạng lưới văn phòng</b><span>Trụ sở Hà Nội, 5 chi nhánh, 5 văn phòng đại diện</span></a>
+            <a href="../ve-asco/#minh-bach"><b>Năng lực &amp; minh bạch</b><span>Chấp thuận của Bộ Tài chính, UBCKNN, Báo cáo minh bạch</span></a>
+          </div>
+        </div>
+      </li>
     </ul>
 
     <div class="nav-act">
