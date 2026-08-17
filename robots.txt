@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Khong chan bot AI — de ASCO duoc tim thay khi khach hoi ChatGPT, Gemini, Perplexity
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://khietasco-dev.github.io/asco-website/sitemap.xml
