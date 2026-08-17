@@ -372,6 +372,33 @@ footer .soc a:hover{background:rgba(228,180,81,.2);border-color:rgba(228,180,81,
 .phero-facts span{font-size:13.8px;font-weight:600;padding:8px 15px;border-radius:999px;
   background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22)}
 
+/* ---------- hero hai cột: trái là thông tin, phải là dòng sự kiện ---------- */
+.phero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(28px,4vw,54px);align-items:center}
+@media (max-width:1000px){.phero-grid{grid-template-columns:1fr;gap:34px}}
+.phero-grid .lede{max-width:52ch}
+.phero-grid h1{max-width:16ch}
+
+.tline{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);border-radius:var(--r-xl);
+  padding:22px;backdrop-filter:blur(7px);box-shadow:0 34px 66px -36px rgba(0,0,0,.75)}
+.tline h2{font-size:16px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:9px;letter-spacing:0}
+.ev{display:flex;gap:15px;padding:13px;border-radius:15px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.15);margin-bottom:10px;
+  transition:background .16s ease,border-color .16s ease,transform .16s ease}
+.ev:last-child{margin-bottom:0}
+.ev:hover{background:rgba(255,255,255,.11);border-color:rgba(228,180,81,.42);transform:translateX(3px)}
+.ev .thumb{flex:0 0 auto;width:92px;height:70px;border-radius:11px;overflow:hidden;display:grid;place-items:center;
+  background:linear-gradient(140deg,rgba(228,180,81,.26),rgba(255,255,255,.05));
+  border:1px solid rgba(228,180,81,.4);color:var(--gold-hi);position:relative}
+.ev .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.ev .thumb .cho{position:absolute;bottom:0;left:0;right:0;font-size:9.4px;letter-spacing:.05em;text-transform:uppercase;
+  text-align:center;padding:2px 0;background:rgba(11,30,64,.62);color:var(--gold-hi);font-weight:800}
+.ev .txt{min-width:0}
+.ev .yr{font-size:11.6px;font-weight:800;letter-spacing:.12em;color:var(--gold-hi);text-transform:uppercase}
+.ev b{display:block;font-size:15.2px;line-height:1.28;margin-top:4px;color:#fff}
+.ev span{display:block;font-size:12.9px;color:rgba(255,255,255,.68);line-height:1.48;margin-top:5px}
+.tline .anh-can{margin-top:14px;font-size:12.4px;color:rgba(255,255,255,.58);line-height:1.5}
+@media (max-width:420px){.ev{flex-direction:column}.ev .thumb{width:100%;height:120px}}
+
 /* ---------- bộ lọc ---------- */
 .chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px}
 .chip{font:inherit;font-size:14.4px;font-weight:600;padding:9px 17px;border-radius:999px;cursor:pointer;
@@ -486,10 +513,10 @@ details.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15.3px;line-heigh
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 6.5L21 6"/></svg>
         asco@asco.vn
       </a>
-      <span class="tb-i hide-sm">
+      <a class="tb-i hide-sm" href="https://www.google.com/maps/search/?api=1&query=S%E1%BB%91%202%2C%20ng%C3%B5%20308%2C%20Ph%E1%BB%91%20L%C3%AA%20Tr%E1%BB%8Dng%20T%E1%BA%A5n%2C%20Ph%C6%B0%E1%BB%9Dng%20Ph%C6%B0%C6%A1ng%20Li%E1%BB%87t%2C%20H%C3%A0%20N%E1%BB%99i" target="_blank" rel="noopener noreferrer">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/></svg>
-        Số 2, ngõ 308 Lê Trọng Tấn, Hà Nội
-      </span>
+        Số 2, ngõ 308 Phố Lê Trọng Tấn, Phường Phương Liệt, Hà Nội
+      </a>
     </div>
     <div class="tb-r">
       <a href="../ve-asco/#minh-bach">Báo cáo minh bạch 2025</a>
@@ -849,7 +876,7 @@ details.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15.3px;line-heigh
 
     <div class="f-bot">
       <span>© 2026 Hãng Kiểm toán và Định giá ASCO. Giữ toàn quyền.</span>
-      <span>024 3793 0960 · asco@asco.vn · Số 2, ngõ 308 Lê Trọng Tấn, Hà Nội</span>
+      <span>024 3793 0960 · asco@asco.vn · Số 2, ngõ 308, Phố Lê Trọng Tấn, Phường Phương Liệt, TP Hà Nội</span>
     </div>
   </div>
 </footer>
@@ -871,7 +898,7 @@ details.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15.3px;line-heigh
   "foundingDate":"2007",
   "email":"asco@asco.vn",
   "telephone":"+842437930960",
-  "address":{"@type":"PostalAddress","streetAddress":"Số 2, ngõ 308 Lê Trọng Tấn","addressLocality":"Hà Nội","addressCountry":"VN"},
+  "address":{"@type":"PostalAddress","streetAddress":"Số 2, ngõ 308, Phố Lê Trọng Tấn, Phường Phương Liệt","addressLocality":"Hà Nội","addressCountry":"VN"},
   "areaServed":"VN",
   "description":"Kiểm toán báo cáo quyết toán dự án hoàn thành, kiểm toán báo cáo tài chính, thẩm định giá, tư vấn, đào tạo. Một trong 5 hãng kiểm toán dự án lớn nhất Việt Nam."
 }

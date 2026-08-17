@@ -372,6 +372,33 @@ footer .soc a:hover{background:rgba(228,180,81,.2);border-color:rgba(228,180,81,
 .phero-facts span{font-size:13.8px;font-weight:600;padding:8px 15px;border-radius:999px;
   background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22)}
 
+/* ---------- hero hai cột: trái là thông tin, phải là dòng sự kiện ---------- */
+.phero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(28px,4vw,54px);align-items:center}
+@media (max-width:1000px){.phero-grid{grid-template-columns:1fr;gap:34px}}
+.phero-grid .lede{max-width:52ch}
+.phero-grid h1{max-width:16ch}
+
+.tline{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);border-radius:var(--r-xl);
+  padding:22px;backdrop-filter:blur(7px);box-shadow:0 34px 66px -36px rgba(0,0,0,.75)}
+.tline h2{font-size:16px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:9px;letter-spacing:0}
+.ev{display:flex;gap:15px;padding:13px;border-radius:15px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.15);margin-bottom:10px;
+  transition:background .16s ease,border-color .16s ease,transform .16s ease}
+.ev:last-child{margin-bottom:0}
+.ev:hover{background:rgba(255,255,255,.11);border-color:rgba(228,180,81,.42);transform:translateX(3px)}
+.ev .thumb{flex:0 0 auto;width:92px;height:70px;border-radius:11px;overflow:hidden;display:grid;place-items:center;
+  background:linear-gradient(140deg,rgba(228,180,81,.26),rgba(255,255,255,.05));
+  border:1px solid rgba(228,180,81,.4);color:var(--gold-hi);position:relative}
+.ev .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.ev .thumb .cho{position:absolute;bottom:0;left:0;right:0;font-size:9.4px;letter-spacing:.05em;text-transform:uppercase;
+  text-align:center;padding:2px 0;background:rgba(11,30,64,.62);color:var(--gold-hi);font-weight:800}
+.ev .txt{min-width:0}
+.ev .yr{font-size:11.6px;font-weight:800;letter-spacing:.12em;color:var(--gold-hi);text-transform:uppercase}
+.ev b{display:block;font-size:15.2px;line-height:1.28;margin-top:4px;color:#fff}
+.ev span{display:block;font-size:12.9px;color:rgba(255,255,255,.68);line-height:1.48;margin-top:5px}
+.tline .anh-can{margin-top:14px;font-size:12.4px;color:rgba(255,255,255,.58);line-height:1.5}
+@media (max-width:420px){.ev{flex-direction:column}.ev .thumb{width:100%;height:120px}}
+
 /* ---------- bộ lọc ---------- */
 .chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px}
 .chip{font:inherit;font-size:14.4px;font-weight:600;padding:9px 17px;border-radius:999px;cursor:pointer;
@@ -486,10 +513,10 @@ details.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15.3px;line-heigh
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 6.5L21 6"/></svg>
         asco@asco.vn
       </a>
-      <span class="tb-i hide-sm">
+      <a class="tb-i hide-sm" href="https://www.google.com/maps/search/?api=1&query=S%E1%BB%91%202%2C%20ng%C3%B5%20308%2C%20Ph%E1%BB%91%20L%C3%AA%20Tr%E1%BB%8Dng%20T%E1%BA%A5n%2C%20Ph%C6%B0%E1%BB%9Dng%20Ph%C6%B0%C6%A1ng%20Li%E1%BB%87t%2C%20H%C3%A0%20N%E1%BB%99i" target="_blank" rel="noopener noreferrer">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/></svg>
-        Số 2, ngõ 308 Lê Trọng Tấn, Hà Nội
-      </span>
+        Số 2, ngõ 308 Phố Lê Trọng Tấn, Phường Phương Liệt, Hà Nội
+      </a>
     </div>
     <div class="tb-r">
       <a href="../ve-asco/#minh-bach">Báo cáo minh bạch 2025</a>
@@ -553,15 +580,94 @@ details.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15.3px;line-heigh
     <nav class="crumb" aria-label="Đường dẫn">
       <a href="../">Trang chủ</a><span class="sep">›</span><span aria-current="page">Về ASCO</span>
     </nav>
-    <span class="pill"><span class="dot"></span>Thành lập 2007 · 19 năm hoạt động liên tục</span>
-    <h1>Hãng Kiểm toán và Định giá ASCO</h1>
-    <p class="lede">
-      Một trong 5 hãng kiểm toán dự án lớn nhất Việt Nam. Trang này chỉ nêu những gì kiểm chứng được:
-      con số năng lực tại Việt Nam của riêng ASCO, giấy tờ chấp thuận, và mạng lưới có nhân sự thật.
-    </p>
-    <div class="phero-facts">
-      <span>Không dùng số liệu mạng lưới quốc tế thay cho năng lực trong nước</span>
-      <span>Cập nhật đến 30/6/2026</span>
+
+    <div class="phero-grid" style="margin-top:20px">
+      <!-- ---------- CỘT TRÁI: THÔNG TIN ---------- -->
+      <div>
+        <span class="pill"><span class="dot"></span>Thành lập 2007 · 19 năm hoạt động liên tục</span>
+        <h1>Hãng Kiểm toán và Định giá ASCO</h1>
+        <p class="lede">
+          Một trong 5 hãng kiểm toán dự án lớn nhất Việt Nam. Trang này chỉ nêu những gì kiểm chứng được:
+          con số năng lực tại Việt Nam của riêng ASCO, giấy tờ chấp thuận, và mạng lưới có nhân sự thật.
+        </p>
+        <div class="phero-facts">
+          <span>Không mượn số liệu mạng lưới quốc tế</span>
+          <span>Cập nhật đến 30/6/2026</span>
+        </div>
+      </div>
+
+      <!-- ---------- CỘT PHẢI: DÒNG SỰ KIỆN ---------- -->
+      <aside class="tline">
+        <h2>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+          Những mốc làm nên ASCO hôm nay
+        </h2>
+
+        <article class="ev">
+          <div class="thumb">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V9l7-4 7 4v12"/><path d="M9 21v-6h6v6"/></svg>
+            <span class="cho">Ảnh</span>
+          </div>
+          <div class="txt">
+            <div class="yr">2007 · Khởi đầu</div>
+            <b>Thành lập và chọn một nghề hẹp</b>
+            <span>ASCO ra đời với chiến lược tập trung vào kiểm toán quyết toán dự án hoàn thành — lĩnh vực đòi hỏi kỹ sư đọc bản vẽ, không phải nghề của hãng kiểm toán truyền thống.</span>
+          </div>
+        </article>
+
+        <article class="ev">
+          <div class="thumb">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5.5L12 2 4 5.5V12c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+            <span class="cho">Ảnh</span>
+          </div>
+          <div class="txt">
+            <div class="yr">Bộ Tài chính · UBCKNN</div>
+            <b>Được chấp thuận kiểm toán đơn vị có lợi ích công chúng</b>
+            <span>Thuộc danh sách chấp thuận của Bộ Tài chính cho cả lĩnh vực chứng khoán và lĩnh vực khác, với 21 kiểm toán viên hành nghề được Ủy ban Chứng khoán Nhà nước chấp thuận.</span>
+          </div>
+        </article>
+
+        <article class="ev">
+          <div class="thumb">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16M7 20V11M12 20V5M17 20v-6"/></svg>
+            <span class="cho">Ảnh</span>
+          </div>
+          <div class="txt">
+            <div class="yr">2021 · Vị thế</div>
+            <b>Một trong hai hãng có doanh thu lớn nhất về kiểm toán quyết toán dự án</b>
+            <span>Theo báo cáo của Bộ Tài chính năm 2021, xét riêng lĩnh vực kiểm toán quyết toán dự án hoàn thành trên toàn quốc.</span>
+          </div>
+        </article>
+
+        <article class="ev">
+          <div class="thumb">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M9 11h3"/></svg>
+            <span class="cho">Ảnh</span>
+          </div>
+          <div class="txt">
+            <div class="yr">29/12/2025 · Minh bạch</div>
+            <b>Công bố Báo cáo minh bạch 2025</b>
+            <span>Công khai cơ cấu tổ chức, hệ thống kiểm soát chất lượng, chính sách độc lập và danh mục khách hàng có lợi ích công chúng.</span>
+          </div>
+        </article>
+
+        <article class="ev">
+          <div class="thumb">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a4 4 0 0 0-4 4v1a4 4 0 0 0 0 8v1a4 4 0 0 0 8 0v-1a4 4 0 0 0 0-8V6a4 4 0 0 0-4-4Z"/><path d="M12 8v8"/></svg>
+            <span class="cho">Ảnh</span>
+          </div>
+          <div class="txt">
+            <div class="yr">2026 · Công nghệ</div>
+            <b>Đưa trí tuệ nhân tạo vào kiểm toán dự án</b>
+            <span>Phần mềm kiểm toán dự án ứng dụng AI để tăng độ phủ kiểm tra trên khối hồ sơ lớn, đồng thời huấn luyện khách hàng đưa AI vào công tác quản trị của chính mình.</span>
+          </div>
+        </article>
+
+        <p class="anh-can">
+          Năm khung ảnh trên đang để trống. ASCO chỉ cần gửi 5 tấm — trụ sở, giấy chấp thuận,
+          đội ngũ, bìa Báo cáo minh bạch, màn hình phần mềm AI — là trang hoàn chỉnh.
+        </p>
+      </aside>
     </div>
   </div>
 </header>
@@ -667,6 +773,20 @@ details.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15.3px;line-heigh
         Nhóm kiểm toán được bố trí từ cơ sở gần dự án nhất — giảm chi phí đi lại, rút ngắn thời gian làm việc tại chỗ,
         và nắm được thực tiễn xử lý hồ sơ của cơ quan quản lý địa phương.
       </p>
+    </div>
+
+    <div class="card rv" style="display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:18px;
+                background:var(--tint);border-color:var(--tint-2)">
+      <div style="flex:1 1 400px">
+        <div class="badge b-navy">Trụ sở chính</div>
+        <h3 style="margin-top:12px;margin-bottom:6px">Số 2, ngõ 308, Phố Lê Trọng Tấn</h3>
+        <p style="color:var(--ink-2);font-size:15.3px">Phường Phương Liệt, Thành phố Hà Nội</p>
+        <p class="small" style="margin-top:8px">Điện thoại 024 3793 0960 · asco@asco.vn</p>
+      </div>
+      <a class="btn btn-navy" href="https://www.google.com/maps/search/?api=1&amp;query=S%E1%BB%91%202%2C%20ng%C3%B5%20308%2C%20Ph%E1%BB%91%20L%C3%AA%20Tr%E1%BB%8Dng%20T%E1%BA%A5n%2C%20Ph%C6%B0%E1%BB%9Dng%20Ph%C6%B0%C6%A1ng%20Li%E1%BB%87t%2C%20H%C3%A0%20N%E1%BB%99i" target="_blank" rel="noopener noreferrer">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/></svg>
+        Mở Google Maps
+      </a>
     </div>
 
     <div class="grid g2" style="gap:18px">
@@ -798,7 +918,7 @@ details.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15.3px;line-heigh
 
     <div class="f-bot">
       <span>© 2026 Hãng Kiểm toán và Định giá ASCO. Giữ toàn quyền.</span>
-      <span>024 3793 0960 · asco@asco.vn · Số 2, ngõ 308 Lê Trọng Tấn, Hà Nội</span>
+      <span>024 3793 0960 · asco@asco.vn · Số 2, ngõ 308, Phố Lê Trọng Tấn, Phường Phương Liệt, TP Hà Nội</span>
     </div>
   </div>
 </footer>
@@ -820,7 +940,7 @@ details.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15.3px;line-heigh
   "foundingDate":"2007",
   "email":"asco@asco.vn",
   "telephone":"+842437930960",
-  "address":{"@type":"PostalAddress","streetAddress":"Số 2, ngõ 308 Lê Trọng Tấn","addressLocality":"Hà Nội","addressCountry":"VN"},
+  "address":{"@type":"PostalAddress","streetAddress":"Số 2, ngõ 308, Phố Lê Trọng Tấn, Phường Phương Liệt","addressLocality":"Hà Nội","addressCountry":"VN"},
   "areaServed":"VN",
   "description":"Kiểm toán báo cáo quyết toán dự án hoàn thành, kiểm toán báo cáo tài chính, thẩm định giá, tư vấn, đào tạo. Một trong 5 hãng kiểm toán dự án lớn nhất Việt Nam."
 }
