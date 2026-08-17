@@ -1,0 +1,1397 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASCO — Kiểm toán · Thẩm định giá cho những dự án lớn nhất Việt Nam</title>
+<meta name="description" content="Hãng Kiểm toán và Định giá ASCO — một trong 5 hãng kiểm toán dự án lớn nhất Việt Nam. Hơn 8.000 dự án, thành lập 2007, 11 điểm hiện diện. Kiểm toán · Thẩm định giá · Tư vấn · Đào tạo · Công nghệ.">
+<meta name="theme-color" content="#184088">
+
+<style>
+/* ============================================================
+   HỆ THIẾT KẾ WEBSITE ASCO
+   Mô-típ thị giác: khẩu độ ống kính lấy từ chính dấu hiệu trong logo ASCO
+   — biểu tượng của việc soi xét, lấy nét, nhìn rõ.
+   Hàm JS đặt tiền tố as… để không trùng tên.
+   ============================================================ */
+:root{
+  /* Xanh chuẩn lấy trực tiếp từ file logo ASCO: #184088 */
+  --navy:#184088; --navy-600:#143670; --navy-800:#102A56; --navy-900:#0C2148;
+  --navy-300:#5478BE; --navy-100:#C6D5EF;
+  --tint:#EDF2FB; --tint-2:#D8E3F6;
+  --gold:#B8862A; --gold-hi:#E4B451; --gold-tint:#FBF3E2;
+
+  /* Token CỐ ĐỊNH — không đảo theo sáng/tối. Dùng cho các mảng luôn nền đậm
+     chữ trắng (thanh trên cùng, đầu thẻ dự án, chân trang). Nếu dùng --navy-900
+     ở những chỗ này thì ở chế độ tối nền sẽ hoá sáng và chữ trắng biến mất.
+     Cả ba đều là XANH LOGO pha đậm — không có tông đen. */
+  --deep:#12305F; --deep-2:#1A3F7A; --brand:#184088;
+
+  --bg:#FFFFFF; --bg-alt:#F4F7FC; --surface:#FFFFFF;
+  --ink:#0E1729; --ink-2:#313B52; --muted:#5D687C;
+  --line:#E0E6F0; --line-soft:#EEF2F8;
+
+  --ok:#0F6B54; --danger:#A82420;
+
+  --shadow-xs:0 1px 2px rgba(11,30,64,.05);
+  --shadow-sm:0 2px 6px -2px rgba(11,30,64,.10);
+  --shadow:0 4px 10px -4px rgba(11,30,64,.12), 0 16px 40px -24px rgba(11,30,64,.35);
+  --shadow-lg:0 8px 20px -8px rgba(11,30,64,.16), 0 36px 70px -34px rgba(11,30,64,.48);
+
+  --maxw:1220px; --r:14px; --r-lg:20px; --r-xl:26px;
+  --f:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Roboto,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --navy:#8FB2EE; --navy-600:#A8C4F4; --navy-800:#CCDDF9; --navy-900:#E1EBFC;
+    --navy-300:#4A6EB0; --navy-100:#1E3866;
+    --tint:#16305C; --tint-2:#1E3D71;
+    --gold:#E0B458; --gold-hi:#F2CE83; --gold-tint:#2E2415;
+    /* Nền tối là XANH NAVY của logo pha đậm, không dùng tông đen */
+    --bg:#0D2044; --bg-alt:#0A1B3B; --surface:#13294F;
+    --ink:#EEF3FB; --ink-2:#C2D0E6; --muted:#8DA0C0;
+    --line:#22406E; --line-soft:#1A3260;
+    --ok:#4FC0A2; --danger:#F0857E;
+    --shadow-xs:0 1px 2px rgba(0,0,0,.4);
+    --shadow-sm:0 2px 6px -2px rgba(0,0,0,.5);
+    --shadow:0 4px 10px -4px rgba(0,0,0,.5), 0 18px 40px -24px rgba(0,0,0,.85);
+    --shadow-lg:0 8px 20px -8px rgba(0,0,0,.55), 0 40px 74px -34px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --navy:#8FB2EE; --navy-600:#A8C4F4; --navy-800:#CCDDF9; --navy-900:#E1EBFC;
+  --navy-300:#4A6EB0; --navy-100:#1E3866;
+  --tint:#16305C; --tint-2:#1E3D71;
+  --gold:#E0B458; --gold-hi:#F2CE83; --gold-tint:#2E2415;
+  --bg:#0D2044; --bg-alt:#0A1B3B; --surface:#13294F;
+  --ink:#EEF3FB; --ink-2:#C2D0E6; --muted:#8DA0C0;
+  --line:#22406E; --line-soft:#1A3260;
+  --ok:#4FC0A2; --danger:#F0857E;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.4);
+  --shadow-sm:0 2px 6px -2px rgba(0,0,0,.5);
+  --shadow:0 4px 10px -4px rgba(0,0,0,.5), 0 18px 40px -24px rgba(0,0,0,.85);
+  --shadow-lg:0 8px 20px -8px rgba(0,0,0,.55), 0 40px 74px -34px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:104px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:17px;line-height:1.66;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{margin:0;font-weight:800;line-height:1.13;letter-spacing:-.02em;text-wrap:balance}
+h2{font-size:clamp(27px,3.5vw,40px)}
+h3{font-size:clamp(18px,2vw,21px);letter-spacing:-.012em}
+p{margin:0} ul,ol{margin:0;padding-left:1.15em}
+a{color:var(--navy);text-underline-offset:3px}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+section{padding:clamp(56px,7vw,100px) 0}
+.alt{background:var(--bg-alt)}
+.center{text-align:center}
+.tnum{font-variant-numeric:tabular-nums}
+.lede{font-size:clamp(17px,1.7vw,19.5px);color:var(--ink-2);line-height:1.62}
+.small{font-size:14px;color:var(--muted);line-height:1.58}
+.sec-head{max-width:800px;margin-bottom:42px}
+.sec-head.center{margin-left:auto;margin-right:auto}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--navy);
+  margin-bottom:14px;display:flex;align-items:center;gap:11px}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--gold);flex:0 0 auto;border-radius:2px}
+.center .eyebrow{justify-content:center}
+
+/* ---------- NÚT ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55em;font:inherit;font-weight:700;
+  font-size:16px;padding:14px 27px;border-radius:999px;border:1.5px solid transparent;cursor:pointer;
+  text-decoration:none;text-align:center;
+  transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease,color .16s ease}
+.btn:focus-visible{outline:2.5px solid var(--gold);outline-offset:3px}
+.btn-gold{background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#1E1606;box-shadow:0 10px 24px -12px rgba(184,134,42,.8)}
+.btn-gold:hover{transform:translateY(-2px)}
+.btn-navy{background:var(--navy);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-navy:hover{transform:translateY(-2px);background:var(--navy-600)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn-navy{color:#0D2044}}
+:root[data-theme="dark"] .btn-navy{color:#0D2044}
+.btn-outline{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn-outline:hover{border-color:var(--navy);color:var(--navy)}
+.btn-onnavy{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4);color:#fff}
+.btn-onnavy:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.btn-sm{font-size:14.5px;padding:10px 19px}
+.btn-lg{font-size:17px;padding:16px 32px}
+
+/* ---------- THANH TRÊN CÙNG ---------- */
+.topbar{background:var(--deep);color:rgba(255,255,255,.78);font-size:13.4px}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:9px;padding-bottom:9px}
+.topbar a{color:rgba(255,255,255,.86);text-decoration:none}
+.topbar a:hover{color:var(--gold-hi)}
+.tb-l,.tb-r{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.tb-r{gap:14px}
+.tb-i{display:inline-flex;align-items:center;gap:7px}
+@media (max-width:860px){.topbar .wrap{justify-content:center}.tb-l .hide-sm{display:none}}
+
+/* ---------- ĐIỀU HƯỚNG ---------- */
+nav.main{position:sticky;top:0;z-index:80;background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:saturate(1.5) blur(14px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex:0 0 auto}
+.brand img{height:34px;width:auto}
+:root[data-theme="dark"] .brand img{filter:brightness(1.9) saturate(.55)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .brand img{filter:brightness(1.9) saturate(.55)}}
+.menu{display:flex;align-items:center;gap:4px;margin-left:auto}
+.menu > li{list-style:none;position:relative}
+.menu > li > a{display:inline-flex;align-items:center;gap:6px;padding:10px 13px;border-radius:9px;
+  font-size:15px;font-weight:600;color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.menu > li > a:hover,.menu > li:focus-within > a{color:var(--navy);background:var(--tint)}
+.menu .caret{width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+  transform:rotate(45deg) translateY(-2px);opacity:.55}
+/* mega menu — mở bằng hover và bằng bàn phím */
+.mega{position:absolute;left:50%;transform:translateX(-50%) translateY(8px);top:calc(100% + 6px);
+  width:min(660px,90vw);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-lg);padding:18px;opacity:0;visibility:hidden;transition:opacity .18s ease,transform .18s ease}
+.menu > li:hover .mega,.menu > li:focus-within .mega{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.mega-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mega a{display:block;padding:12px 14px;border-radius:11px;text-decoration:none;color:inherit}
+.mega a:hover{background:var(--tint)}
+.mega a b{display:block;font-size:15px;color:var(--ink);margin-bottom:2px}
+.mega a span{display:block;font-size:13px;color:var(--muted);line-height:1.45}
+.nav-act{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.theme-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface);
+  color:var(--ink-2);cursor:pointer;display:grid;place-items:center;flex:0 0 auto}
+.theme-btn:hover{border-color:var(--navy);color:var(--navy)}
+@media (max-width:1160px){.menu{display:none}}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;
+  background:radial-gradient(900px 520px at 84% -14%,rgba(228,180,81,.18),transparent 60%),
+             linear-gradient(152deg,#2456A6 0%,#1B4189 52%,#12305F 100%)}
+/* khẩu độ ống kính — lấy từ dấu hiệu trong logo ASCO */
+.aperture{position:absolute;right:-140px;top:50%;transform:translateY(-50%);width:760px;height:760px;
+  opacity:.15;pointer-events:none}
+@media (max-width:1080px){.aperture{right:-320px;opacity:.09}}
+.hero .wrap{position:relative;z-index:2;padding-top:clamp(58px,7vw,96px);padding-bottom:clamp(52px,6vw,84px)}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(30px,4.5vw,60px);align-items:center}
+@media (max-width:980px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+.pill{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.11);
+  border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:999px;font-size:13.2px;font-weight:700}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:var(--gold-hi);box-shadow:0 0 0 4px rgba(228,180,81,.22)}
+.hero h1{font-size:clamp(32px,5vw,58px);margin:22px 0 0;color:#fff;letter-spacing:-.028em}
+.hero h1 em{font-style:normal;color:var(--gold-hi)}
+.hero p.lede{color:rgba(255,255,255,.86);margin-top:22px;max-width:56ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:13px;margin-top:32px}
+.hero-note{margin-top:18px;font-size:13.6px;color:rgba(255,255,255,.62)}
+
+/* thẻ lối vào nhanh trong hero */
+.quick{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);border-radius:var(--r-xl);
+  padding:24px;backdrop-filter:blur(7px);box-shadow:0 34px 66px -36px rgba(0,0,0,.75)}
+.quick h3{color:#fff;font-size:16px;margin-bottom:16px;display:flex;align-items:center;gap:9px}
+.quick-list{display:grid;gap:9px}
+.qi{display:flex;align-items:center;gap:13px;padding:13px 15px;border-radius:13px;text-decoration:none;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#fff;
+  transition:background .16s ease,transform .16s ease,border-color .16s ease}
+.qi:hover{background:rgba(255,255,255,.14);border-color:rgba(228,180,81,.5);transform:translateX(4px)}
+.qi .ic{flex:0 0 auto;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+  background:rgba(228,180,81,.16);border:1px solid rgba(228,180,81,.4);color:var(--gold-hi)}
+.qi b{display:block;font-size:14.8px;line-height:1.25}
+.qi span{display:block;font-size:12.6px;color:rgba(255,255,255,.62);margin-top:2px;line-height:1.4}
+
+/* ---------- THANH SỐ LIỆU ---------- */
+.stats{border-top:1px solid rgba(255,255,255,.16);position:relative;z-index:2}
+.stats-in{max-width:var(--maxw);margin:0 auto;padding:24px;display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+@media (max-width:980px){.stats-in{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:600px){.stats-in{grid-template-columns:repeat(2,1fr)}}
+.st{text-align:center}
+.st .v{font-size:clamp(24px,3vw,34px);font-weight:800;color:var(--gold-hi);letter-spacing:-.025em;
+  line-height:1.1;font-variant-numeric:tabular-nums}
+.st .l{font-size:12.8px;color:rgba(255,255,255,.66);margin-top:6px;line-height:1.42}
+
+/* ---------- THẺ ---------- */
+.grid{display:grid;gap:22px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g5{grid-template-columns:repeat(5,1fr)}
+@media (max-width:1080px){.g5{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:960px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:680px){.g2,.g3,.g4,.g5{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;
+  box-shadow:var(--shadow-xs);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--navy-300)}
+.card h3{margin-bottom:10px}
+.card p{color:var(--ink-2);font-size:15.3px}
+a.card{text-decoration:none;color:inherit;display:block}
+.ico{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;margin-bottom:18px;
+  background:var(--tint);color:var(--navy);border:1px solid var(--tint-2)}
+.ico.gold{background:var(--gold-tint);color:var(--gold);border-color:color-mix(in srgb,var(--gold) 30%,transparent)}
+.more{margin-top:16px;font-weight:700;font-size:14.8px;color:var(--navy);display:inline-flex;align-items:center;gap:7px}
+.card:hover .more{gap:11px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;padding:4px 11px;border-radius:999px}
+.b-navy{background:var(--tint);color:var(--navy);border:1px solid var(--tint-2)}
+.b-gold{background:var(--gold-tint);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 34%,transparent)}
+.b-new{background:color-mix(in srgb,var(--ok) 13%,transparent);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 32%,transparent)}
+
+/* ---------- CÔNG CỤ ---------- */
+.tool-card{display:flex;gap:16px;align-items:flex-start;padding:22px;border-radius:var(--r-lg);
+  background:var(--surface);border:1px solid var(--line);text-decoration:none;color:inherit;
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.tool-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--gold)}
+.tool-card .ic{flex:0 0 auto;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+  background:var(--gold-tint);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}
+.tool-card b{display:block;font-size:16px;margin-bottom:4px}
+.tool-card span{display:block;font-size:14px;color:var(--muted);line-height:1.5}
+
+/* ---------- DỰ ÁN ---------- */
+.proj{border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line);background:var(--surface);
+  box-shadow:var(--shadow-xs);transition:transform .2s ease,box-shadow .2s ease}
+.proj:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.proj-top{padding:20px 22px;background:linear-gradient(140deg,var(--brand),var(--deep-2));color:#fff}
+.proj-top .k{font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-hi)}
+.proj-top h3{color:#fff;font-size:17.5px;margin-top:7px;line-height:1.28}
+.proj-body{padding:18px 22px}
+.proj-body .r{display:flex;justify-content:space-between;gap:12px;font-size:14.2px;padding:6px 0;
+  border-bottom:1px dashed var(--line-soft)}
+.proj-body .r:last-child{border-bottom:0}
+.proj-body .r span{color:var(--muted);flex:0 0 auto;white-space:nowrap}
+.proj-body .r b{text-align:right;font-variant-numeric:tabular-nums}
+
+/* ---------- KHÁCH HÀNG ---------- */
+.logos{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.logos span{font-size:14.6px;font-weight:700;color:var(--ink-2);background:var(--surface);
+  border:1px solid var(--line);border-radius:999px;padding:11px 20px}
+.quote{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;
+  box-shadow:var(--shadow-xs);display:flex;flex-direction:column}
+.quote .q{font-size:16.4px;color:var(--ink);line-height:1.6;position:relative;padding-top:14px}
+.quote .q::before{content:"";position:absolute;top:0;left:0;width:34px;height:3px;background:var(--gold);border-radius:2px}
+.quote .who{margin-top:auto;padding-top:18px;display:flex;align-items:center;gap:13px}
+.quote .av{width:44px;height:44px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
+  background:var(--tint);color:var(--navy);font-weight:800;font-size:15px;border:1px solid var(--tint-2)}
+.quote .who b{display:block;font-size:15px}
+.quote .who span{display:block;font-size:13px;color:var(--muted);line-height:1.4}
+
+/* ---------- TRI THỨC ---------- */
+.post{display:block;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:24px;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.post:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--navy-300)}
+.post .meta{font-size:12.6px;color:var(--muted);display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.post h3{font-size:18px;line-height:1.3;margin-bottom:9px}
+.post p{font-size:14.6px;color:var(--ink-2)}
+
+/* ---------- MẠNG LƯỚI ---------- */
+.net{display:flex;flex-wrap:wrap;gap:11px}
+.net span{font-size:14.4px;font-weight:600;padding:9px 17px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);display:inline-flex;gap:9px;align-items:center}
+.net span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.net span.hq{border-color:var(--navy-300);color:var(--navy);font-weight:800}
+.net span.hq::before{background:var(--navy);box-shadow:0 0 0 3px color-mix(in srgb,var(--navy) 22%,transparent)}
+
+/* ---------- LIÊN HỆ ---------- */
+.cta{color:#fff;position:relative;overflow:hidden;
+  background:radial-gradient(700px 440px at 88% -10%,rgba(228,180,81,.2),transparent 60%),
+             linear-gradient(150deg,#2456A6,#12305F)}
+.cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4.5vw,58px);align-items:start;position:relative;z-index:2}
+@media (max-width:900px){.cta-grid{grid-template-columns:1fr}}
+.cta h2{color:#fff}
+.cta .lede{color:rgba(255,255,255,.86)}
+.cc{display:flex;gap:14px;align-items:center;padding:16px 19px;border-radius:14px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.2);text-decoration:none;color:#fff;margin-top:12px;
+  transition:background .16s ease,transform .16s ease}
+.cc:hover{background:rgba(255,255,255,.16);transform:translateX(4px)}
+.cc svg{flex:0 0 auto;color:var(--gold-hi)}
+.cc b{display:block;font-size:16.5px;line-height:1.25}
+.cc span{display:block;font-size:13px;color:rgba(255,255,255,.66)}
+.form-card{background:var(--surface);border-radius:var(--r-xl);padding:28px;box-shadow:var(--shadow-lg);color:var(--ink)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+@media (max-width:520px){.form-grid{grid-template-columns:1fr}}
+.form-grid .full{grid-column:1/-1}
+.form-card label{font-size:13.4px;font-weight:700;display:block;margin-bottom:6px}
+.form-card .req{color:var(--danger)}
+.inp,select.inp,textarea.inp{width:100%;padding:12px 14px;border-radius:11px;border:1.5px solid var(--line);
+  background:var(--bg);color:var(--ink);font:inherit;font-size:16px}
+.inp:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px color-mix(in srgb,var(--navy) 18%,transparent)}
+textarea.inp{min-height:88px;resize:vertical}
+.form-msg{margin-top:14px;padding:14px 16px;border-radius:11px;font-size:14.3px;line-height:1.55;display:none}
+.form-msg.show{display:block}
+.form-msg.ok{background:color-mix(in srgb,var(--ok) 11%,transparent);border:1px solid color-mix(in srgb,var(--ok) 32%,transparent)}
+.form-msg.err{background:color-mix(in srgb,var(--danger) 10%,transparent);border:1px solid color-mix(in srgb,var(--danger) 30%,transparent)}
+
+/* ---------- CHÂN TRANG ---------- */
+footer{background:var(--deep);color:rgba(255,255,255,.72);padding:56px 0 30px}
+:root[data-theme="dark"] footer{background:#0A1B3B}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) footer{background:#0A1B3B}}
+.f-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:34px}
+@media (max-width:940px){.f-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.f-grid{grid-template-columns:1fr}}
+footer img.flogo{height:38px;filter:brightness(0) invert(1);margin-bottom:18px}
+footer h4{font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-hi);margin:0 0 14px}
+footer ul{list-style:none;padding:0;display:grid;gap:9px;font-size:14.6px}
+footer a{color:rgba(255,255,255,.76);text-decoration:none}
+footer a:hover{color:#fff}
+footer .soc{display:flex;gap:10px;margin-top:16px}
+footer .soc a{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff}
+footer .soc a:hover{background:rgba(228,180,81,.2);border-color:rgba(228,180,81,.5)}
+.f-bot{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);
+  display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:13.4px;color:rgba(255,255,255,.55)}
+
+/* ---------- THANH DÍNH DI ĐỘNG ---------- */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:90;display:none;gap:9px;padding:10px 12px;
+  background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);box-shadow:0 -6px 24px -14px rgba(11,30,64,.5)}
+.mbar .btn{flex:1;padding:13px 8px;font-size:14.5px}
+@media (max-width:820px){.mbar{display:flex}body{padding-bottom:74px}}
+
+/* ---------- CHUYỂN ĐỘNG / IN ---------- */
+.js .rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .js .rv{opacity:1;transform:none}}
+@media print{
+  .topbar,nav.main,.mbar,.theme-btn,.hero-cta,.form-card{display:none!important}
+  body{font-size:11.5pt;padding-bottom:0}
+  .hero,.cta,footer{background:#184088!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  section{padding:18px 0;break-inside:avoid}
+}
+
+/* ============================================================
+   THÀNH PHẦN RIÊNG CHO TRANG LỚP 2
+   ============================================================ */
+
+/* ---------- đường dẫn phân cấp ---------- */
+.crumb{font-size:13.6px;color:rgba(255,255,255,.62);display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.crumb a{color:rgba(255,255,255,.82);text-decoration:none}
+.crumb a:hover{color:var(--gold-hi)}
+.crumb span[aria-current]{color:#fff}
+.crumb .sep{opacity:.45}
+
+/* ---------- hero rút gọn của trang trong ---------- */
+.phero{position:relative;overflow:hidden;color:#fff;
+  background:radial-gradient(760px 420px at 88% -30%,rgba(228,180,81,.16),transparent 62%),
+             linear-gradient(150deg,#2456A6 0%,#1B4189 55%,#12305F 100%)}
+.phero .wrap{position:relative;z-index:2;padding-top:26px;padding-bottom:clamp(38px,4.6vw,60px)}
+.phero h1{font-size:clamp(28px,4.2vw,46px);color:#fff;letter-spacing:-.026em;margin:20px 0 0;max-width:20ch}
+.phero .lede{color:rgba(255,255,255,.86);margin-top:18px;max-width:62ch}
+.phero .pill{margin-top:6px}
+.phero-facts{display:flex;flex-wrap:wrap;gap:11px;margin-top:26px}
+.phero-facts span{font-size:13.8px;font-weight:600;padding:8px 15px;border-radius:999px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22)}
+
+/* ---------- bộ lọc ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px}
+.chip{font:inherit;font-size:14.4px;font-weight:600;padding:9px 17px;border-radius:999px;cursor:pointer;
+  background:var(--surface);border:1.5px solid var(--line);color:var(--ink-2);
+  transition:border-color .16s ease,color .16s ease,background .16s ease}
+.chip:hover{border-color:var(--navy-300);color:var(--navy)}
+.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+:root[data-theme="dark"] .chip[aria-pressed="true"]{color:#0D2044}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chip[aria-pressed="true"]{color:#0D2044}}
+.chip:focus-visible{outline:2.5px solid var(--gold);outline-offset:3px}
+.is-off{display:none!important}
+.empty-note{padding:26px;text-align:center;color:var(--muted);font-size:15px;
+  border:1.5px dashed var(--line);border-radius:var(--r-lg)}
+
+/* ---------- máy tính phí ---------- */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+@media (max-width:880px){.calc{grid-template-columns:1fr}}
+.calc-in{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);padding:26px;
+  box-shadow:var(--shadow-sm)}
+.field{margin-bottom:17px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:14px;font-weight:700;margin-bottom:7px}
+.field .hint{display:block;font-size:12.8px;color:var(--muted);font-weight:500;margin-top:4px;line-height:1.5}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button{flex:1 1 auto;font:inherit;font-size:14.4px;font-weight:600;padding:11px 14px;border-radius:11px;
+  cursor:pointer;background:var(--bg);border:1.5px solid var(--line);color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+:root[data-theme="dark"] .seg button[aria-pressed="true"]{color:#0D2044}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .seg button[aria-pressed="true"]{color:#0D2044}}
+.seg button:focus-visible{outline:2.5px solid var(--gold);outline-offset:2px}
+
+.calc-out{background:linear-gradient(150deg,#2456A6,#12305F);color:#fff;border-radius:var(--r-xl);
+  padding:26px;box-shadow:var(--shadow)}
+.calc-out h3{color:#fff;font-size:16px;margin-bottom:18px;display:flex;align-items:center;gap:9px}
+.out-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:13px 0;
+  border-bottom:1px dashed rgba(255,255,255,.2)}
+.out-row:last-of-type{border-bottom:0}
+.out-row .k{font-size:14.2px;color:rgba(255,255,255,.72)}
+.out-row .v{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;text-align:right}
+.out-big{margin-top:16px;padding:18px 20px;border-radius:15px;background:rgba(228,180,81,.14);
+  border:1px solid rgba(228,180,81,.42)}
+.out-big .k{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--gold-hi);font-weight:800}
+.out-big .v{font-size:clamp(25px,3.4vw,34px);font-weight:800;color:#fff;line-height:1.12;margin-top:7px;
+  font-variant-numeric:tabular-nums}
+.out-note{margin-top:16px;font-size:12.9px;color:rgba(255,255,255,.66);line-height:1.55}
+
+/* ---------- bảng tra cứu ---------- */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface)}
+table.tbl{width:100%;border-collapse:collapse;font-size:14.6px;min-width:520px}
+table.tbl th,table.tbl td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--line-soft)}
+table.tbl th{background:var(--tint);font-size:12.6px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--navy);font-weight:800;white-space:nowrap}
+table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.tbl tr:last-child td{border-bottom:0}
+table.tbl tbody tr:hover{background:var(--tint)}
+
+/* ---------- hỏi đáp ---------- */
+details.qa{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:11px}
+details.qa summary{cursor:pointer;padding:17px 20px;font-weight:700;font-size:16px;list-style:none;
+  display:flex;justify-content:space-between;align-items:center;gap:14px}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa summary::after{content:"+";font-size:22px;font-weight:400;color:var(--navy);flex:0 0 auto;line-height:1}
+details.qa[open] summary::after{content:"–"}
+details.qa summary:focus-visible{outline:2.5px solid var(--gold);outline-offset:-2px;border-radius:var(--r)}
+details.qa .a{padding:0 20px 18px;color:var(--ink-2);font-size:15.3px;line-height:1.62}
+
+/* ---------- danh sách có thứ tự thật ---------- */
+.steps{counter-reset:s;display:grid;gap:14px}
+.step{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:22px 24px 22px 68px;position:relative}
+.step::before{content:counter(s);position:absolute;left:22px;top:22px;width:32px;height:32px;border-radius:50%;
+  display:grid;place-items:center;background:var(--navy);color:#fff;font-weight:800;font-size:15px}
+:root[data-theme="dark"] .step::before{color:#0D2044}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .step::before{color:#0D2044}}
+.step h3{margin-bottom:7px}
+.step p{color:var(--ink-2);font-size:15.2px}
+.step .when{display:inline-block;margin-top:9px;font-size:12.8px;font-weight:700;color:var(--gold);
+  background:var(--gold-tint);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);
+  padding:4px 11px;border-radius:999px}
+
+/* ---------- dải kêu gọi rút gọn cuối trang trong ---------- */
+.cta-slim{background:var(--bg-alt);border-top:1px solid var(--line)}
+.cta-slim .box{display:flex;gap:26px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);padding:30px 32px;
+  box-shadow:var(--shadow-xs)}
+.cta-slim h2{font-size:clamp(21px,2.6vw,29px)}
+.cta-slim p{color:var(--ink-2);font-size:15.6px;margin-top:9px;max-width:56ch}
+.cta-slim .acts{display:flex;gap:12px;flex-wrap:wrap}
+
+/* ---------- ô đánh dấu cần ASCO bổ sung ---------- */
+.fill{background:var(--gold-tint);color:var(--gold);border:1px dashed color-mix(in srgb,var(--gold) 46%,transparent);
+  padding:1px 8px;border-radius:6px;font-size:.94em;font-weight:600}
+
+/* ---------- điều hướng trang hiện tại ---------- */
+.menu > li > a[aria-current="page"]{color:var(--navy);background:var(--tint)}
+
+</style>
+<script>document.documentElement.className+=' js';</script>
+</head>
+<body>
+
+
+<!-- =============== THANH TRÊN CÙNG =============== -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="tb-l">
+      <a class="tb-i" href="tel:02437930960">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.4 2.1L8 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+        024 3793 0960
+      </a>
+      <a class="tb-i" href="mailto:asco@asco.vn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 6.5L21 6"/></svg>
+        asco@asco.vn
+      </a>
+      <span class="tb-i hide-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/></svg>
+        Số 2, ngõ 308 Lê Trọng Tấn, Hà Nội
+      </span>
+    </div>
+    <div class="tb-r">
+      <a href="ve-asco/#minh-bach">Báo cáo minh bạch 2025</a>
+      <a href="tuyen-dung/">Tuyển dụng</a>
+      <a href="https://www.facebook.com/ascofirm" target="_blank" rel="noopener noreferrer">Facebook</a>
+    </div>
+  </div>
+</div>
+
+<!-- =============== ĐIỀU HƯỚNG =============== -->
+<nav class="main">
+  <div class="nav-in">
+    <a class="brand" href="" aria-label="ASCO — trang chủ">
+      <img src="data:image/png;base64,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" alt="Hãng Kiểm toán và Định giá ASCO">
+    </a>
+
+    <ul class="menu">
+      <li>
+        <a href="dich-vu/" data-nav="dich-vu">Dịch vụ <i class="caret"></i></a>
+        <div class="mega">
+          <div class="mega-grid">
+            <a href="dich-vu/#kiem-toan-du-an"><b>Kiểm toán quyết toán dự án</b><span>Lĩnh vực lõi — hơn 8.000 dự án đã thực hiện</span></a>
+            <a href="dich-vu/#kiem-toan-bctc"><b>Kiểm toán báo cáo tài chính</b><span>Doanh nghiệp, FDI, đơn vị có lợi ích công chúng</span></a>
+            <a href="dich-vu/#tham-dinh-gia"><b>Thẩm định giá</b><span>Bất động sản, thiết bị, doanh nghiệp, tài sản đặc thù</span></a>
+            <a href="dich-vu/#tu-van"><b>Tư vấn &amp; dịch vụ kế toán</b><span>Thuế, tài chính, quản trị, kế toán trọn gói</span></a>
+            <a href="dich-vu/#dao-tao"><b>Đào tạo</b><span>Huấn luyện chuyên môn tại đơn vị của khách hàng</span></a>
+            <a href="dich-vu/#cong-nghe"><b>Công nghệ &amp; AI</b><span>Phần mềm kiểm toán dự án và ứng dụng AI vào quản trị</span></a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <a href="#linh-vuc" data-nav="linh-vuc">Bạn là ai <i class="caret"></i></a>
+        <div class="mega">
+          <div class="mega-grid">
+            <a href="#linh-vuc"><b>Ban Quản lý dự án &amp; cơ quan nhà nước</b><span>Quyết toán dự án hoàn thành theo Nghị định 193/2026</span></a>
+            <a href="#linh-vuc"><b>UBND xã, phường</b><span>Xử lý danh mục dự án tồn đọng sau sắp xếp bộ máy</span></a>
+            <a href="#linh-vuc"><b>Tổ chức tín dụng</b><span>Quỹ tín dụng nhân dân theo Thông tư 42/2025</span></a>
+            <a href="#linh-vuc"><b>Chủ đầu tư bất động sản</b><span>Nhà ở xã hội — mốc 180 ngày và giá bán được duyệt</span></a>
+            <a href="#linh-vuc"><b>Doanh nghiệp &amp; FDI</b><span>Kiểm toán báo cáo tài chính, tư vấn thuế</span></a>
+            <a href="#linh-vuc"><b>Tập đoàn, Tổng công ty</b><span>Dự án quy mô lớn, đa gói thầu, nhiều địa bàn</span></a>
+          </div>
+        </div>
+      </li>
+      <li><a href="cong-cu/" data-nav="cong-cu">Công cụ</a></li>
+      <li><a href="du-an/" data-nav="du-an">Dự án</a></li>
+      <li><a href="tri-thuc/" data-nav="tri-thuc">Tri thức</a></li>
+      <li><a href="ve-asco/" data-nav="ve-asco">Về ASCO</a></li>
+    </ul>
+
+    <div class="nav-act">
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Đổi giao diện sáng/tối" title="Đổi giao diện sáng/tối">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+      </button>
+      <a class="btn btn-navy btn-sm" href="#lien-he">Nhận báo giá</a>
+    </div>
+  </div>
+</nav>
+
+<!-- =============== HERO =============== -->
+<header class="hero" id="top">
+  <!-- khẩu độ ống kính — mô-típ lấy từ chính dấu hiệu trong logo ASCO -->
+  <svg class="aperture" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+    <circle cx="200" cy="200" r="196" stroke="#fff" stroke-width="1.2" opacity=".5"/>
+    <circle cx="200" cy="200" r="150" stroke="#fff" stroke-width="1.2" opacity=".4"/>
+    <g stroke="#E4B451" stroke-width="2.2" stroke-linejoin="round">
+      <path d="M200 62 L295 117 L295 172 L200 117 Z"/>
+      <path d="M319 145 L319 255 L271 283 L271 172 Z"/>
+      <path d="M295 283 L200 338 L152 310 L247 255 Z"/>
+      <path d="M200 338 L105 283 L105 228 L200 283 Z"/>
+      <path d="M81 255 L81 145 L129 117 L129 228 Z"/>
+      <path d="M105 117 L200 62 L248 90 L153 145 Z"/>
+    </g>
+    <circle cx="200" cy="200" r="58" stroke="#fff" stroke-width="1.6" opacity=".55"/>
+  </svg>
+
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="pill"><span class="dot"></span>Thành lập 2007 · Hơn 8.000 dự án đã kiểm toán quyết toán</span>
+        <h1>Kiểm toán · Thẩm định giá<br>cho <em>những dự án lớn nhất Việt Nam</em></h1>
+        <p class="lede">
+          Từ sân bay, đường sắt đô thị, cảng biển và cao tốc, đến con đường bê tông của một xã —
+          ASCO làm việc trên cùng một chuẩn mực. Một trong <b>5 hãng kiểm toán dự án lớn nhất Việt Nam</b>,
+          với đội ngũ kiểm toán viên, kỹ sư và thẩm định viên trong cùng một tổ chức.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-gold btn-lg" href="cong-cu/">Tính phí dịch vụ trong 1 phút →</a>
+          <a class="btn btn-onnavy btn-lg" href="#lien-he">Nhận tư vấn miễn phí</a>
+        </div>
+        <p class="hero-note">Trao đổi sơ bộ miễn phí · Phản hồi trong 2 giờ làm việc · Bảo mật theo chuẩn mực đạo đức nghề nghiệp</p>
+      </div>
+
+      <aside class="quick">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          Quý khách đang cần gì?
+        </h3>
+        <div class="quick-list">
+          <a class="qi" href="#linh-vuc">
+            <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg></span>
+            <span><b>Quyết toán dự án hoàn thành</b><span>Đầu tư công, xã phường, tập đoàn — Nghị định 193/2026</span></span>
+          </a>
+          <a class="qi" href="#linh-vuc">
+            <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6"/></svg></span>
+            <span><b>Kiểm toán báo cáo tài chính</b><span>Doanh nghiệp, FDI, quỹ tín dụng nhân dân</span></span>
+          </a>
+          <a class="qi" href="#linh-vuc">
+            <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M5 7h14M7 7l-3 6a3.6 3.6 0 0 0 6 0L7 7Zm10 0-3 6a3.6 3.6 0 0 0 6 0l-3-6Z"/></svg></span>
+            <span><b>Thẩm định giá tài sản</b><span>Bất động sản, thiết bị, doanh nghiệp, tài sản đặc thù</span></span>
+          </a>
+          <a class="qi" href="cong-cu/">
+            <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h3M13 10h3M8 14h3M13 14h3M8 18h8"/></svg></span>
+            <span><b>Tự tính phí dịch vụ</b><span>4 công cụ miễn phí, không cần để lại thông tin</span></span>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- =============== THANH SỐ LIỆU =============== -->
+  <div class="stats">
+    <div class="stats-in">
+      <div class="st"><div class="v"><span class="cnt" data-to="8000">8.000</span>+</div><div class="l">Dự án đã kiểm toán quyết toán</div></div>
+      <div class="st"><div class="v"><span class="cnt" data-to="19">19</span></div><div class="l">Năm hoạt động liên tục</div></div>
+      <div class="st"><div class="v">Top <span class="cnt" data-to="5">5</span></div><div class="l">Hãng kiểm toán dự án lớn nhất Việt Nam</div></div>
+      <div class="st"><div class="v"><span class="cnt" data-to="50">50</span>+</div><div class="l">Kỹ sư Xây dựng · Giao thông · Thuỷ lợi</div></div>
+      <div class="st"><div class="v"><span class="cnt" data-to="21">21</span></div><div class="l">KTV hành nghề được UBCKNN chấp thuận</div></div>
+    </div>
+    <p class="small" style="max-width:var(--maxw);margin:0 auto;padding:0 24px 20px;color:rgba(255,255,255,.5);text-align:center">
+      Số liệu năng lực tại Việt Nam của riêng ASCO, không phải số liệu mạng lưới quốc tế · cập nhật đến 30/6/2026
+    </p>
+  </div>
+</header>
+
+<!-- =============== BẠN LÀ AI =============== -->
+<section id="linh-vuc">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Lối vào theo nhu cầu</div>
+      <h2>Mỗi loại khách hàng có một bài toán khác nhau</h2>
+      <p class="lede" style="margin-top:14px">
+        Một Ban Quản lý dự án cấp Bộ, một xã vừa nhận bàn giao hồ sơ từ huyện cũ, một quỹ tín dụng nhân dân
+        và một chủ đầu tư nhà ở xã hội — bốn nghĩa vụ pháp lý hoàn toàn khác nhau. Chọn đúng lối vào của Quý khách.
+      </p>
+    </div>
+
+    <div class="grid g3">
+      <a class="card rv" href="dich-vu/">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
+        <span class="badge b-navy">Đầu tư công</span>
+        <h3 style="margin-top:12px">Ban Quản lý dự án &amp; cơ quan nhà nước</h3>
+        <p>Kiểm toán báo cáo quyết toán dự án hoàn thành theo Nghị định 193/2026/NĐ-CP. Nhóm kiểm toán viên và kỹ sư làm song song trên chứng từ và trên khối lượng, đơn giá.</p>
+        <span class="more">Xem chi tiết →</span>
+      </a>
+
+      <a class="card rv" href="dich-vu/">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h7l2 3h7v13H4Z"/><path d="M9 13h6"/></svg></div>
+        <span class="badge b-new">Chính quyền hai cấp</span>
+        <h3 style="margin-top:12px">UBND xã, phường</h3>
+        <p>Xã mới đang giữ hồ sơ dự án của bộ máy cũ. Công cụ rà soát danh mục dự án tồn đọng và cảnh báo mốc 12 tháng, 24 tháng về xử lý chủ đầu tư chậm quyết toán.</p>
+        <span class="more">Xem trang chuyên đề →</span>
+      </a>
+
+      <a class="card rv" href="dich-vu/">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V9l7-4 7 4v12"/><path d="M9 21v-5h6v5M9 12h6"/></svg></div>
+        <span class="badge b-navy">Tổ chức tín dụng</span>
+        <h3 style="margin-top:12px">Quỹ tín dụng nhân dân</h3>
+        <p>Từ năm tài chính 2027, kiểm toán độc lập trở thành nghĩa vụ theo Thông tư 42/2025/TT-NHNN. Quỹ từ 50 tỷ đồng còn phải làm thêm dịch vụ bảo đảm hệ thống kiểm soát nội bộ.</p>
+        <span class="more">Xem trang chuyên đề →</span>
+      </a>
+
+      <a class="card rv" href="dich-vu/">
+        <div class="ico gold"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M6 21V10l6-4 6 4v11"/><path d="M10 21v-6h4v6"/></svg></div>
+        <span class="badge b-gold">180 ngày</span>
+        <h3 style="margin-top:12px">Chủ đầu tư nhà ở xã hội</h3>
+        <p>Kiểm toán chi phí đầu tư quyết định giá bán được duyệt và phần lợi nhuận định mức doanh nghiệp giữ được. Sai lệch phải hoàn trả chênh lệch cho toàn bộ người mua.</p>
+        <span class="more">Xem trang chuyên đề →</span>
+      </a>
+
+      <a class="card rv" href="dich-vu/">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M9 11h3"/></svg></div>
+        <span class="badge b-navy">Doanh nghiệp</span>
+        <h3 style="margin-top:12px">Doanh nghiệp trong nước &amp; FDI</h3>
+        <p>Kiểm toán báo cáo tài chính, soát xét vì mục đích thuế, kiểm toán nội bộ, tư vấn thuế và dịch vụ kế toán trọn gói cho doanh nghiệp mọi quy mô.</p>
+        <span class="more">Xem chi tiết →</span>
+      </a>
+
+      <a class="card rv" href="dich-vu/">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+        <span class="badge b-navy">Quy mô lớn</span>
+        <h3 style="margin-top:12px">Tập đoàn &amp; Tổng công ty</h3>
+        <p>Dự án nhiều gói thầu, trải nhiều địa bàn, kéo dài nhiều năm. ASCO bố trí nhóm theo vùng từ 11 điểm hiện diện và ứng dụng phần mềm kiểm toán dự án bằng AI.</p>
+        <span class="more">Xem chi tiết →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =============== CÔNG CỤ =============== -->
+<section id="cong-cu" class="alt">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Điều không hãng kiểm toán nào khác làm</div>
+      <h2>Bốn công cụ tính phí miễn phí — biết trước chi phí, không cần gọi điện</h2>
+      <p class="lede" style="margin-top:14px">
+        Phí kiểm toán và thẩm định giá phần lớn là <b>định mức Nhà nước quy định</b>, không phải giá thương lượng.
+        ASCO công khai công cụ tính để Quý khách chủ động dự trù kinh phí trước khi liên hệ bất kỳ đơn vị nào —
+        kể cả khi cuối cùng không chọn ASCO.
+      </p>
+    </div>
+
+    <div class="grid g2" style="gap:16px">
+      <a class="tool-card rv" href="cong-cu/">
+        <span class="ic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13"/></svg></span>
+        <span><b>Phí kiểm toán quyết toán dự án</b><span>Nhập giá trị dự án, ra ngay mức phí theo định mức hiện hành và chi phí thẩm tra, phê duyệt.</span></span>
+      </a>
+      <a class="tool-card rv" href="cong-cu/">
+        <span class="ic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-4"/><path d="M12 2v13M8.5 11.5 12 15l3.5-3.5"/></svg></span>
+        <span><b>Phí thẩm tra quyết toán</b><span>Dành cho cơ quan chủ trì thẩm tra, có tính giảm 50% khi dự án đã được kiểm toán độc lập.</span></span>
+      </a>
+      <a class="tool-card rv" href="cong-cu/">
+        <span class="ic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M5 7h14M7 7l-3 6a3.6 3.6 0 0 0 6 0L7 7Zm10 0-3 6a3.6 3.6 0 0 0 6 0l-3-6Z"/></svg></span>
+        <span><b>Phí thẩm định giá</b><span>Theo loại tài sản: bất động sản, máy móc thiết bị, phương tiện, doanh nghiệp.</span></span>
+      </a>
+      <a class="tool-card rv" href="cong-cu/">
+        <span class="ic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M9 11h3"/></svg></span>
+        <span><b>Phí kiểm toán báo cáo tài chính</b><span>Theo loại hình doanh nghiệp và quy mô doanh thu, tài sản.</span></span>
+      </a>
+    </div>
+
+    <div class="card rv" style="margin-top:22px;display:flex;gap:22px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1 1 340px">
+        <span class="badge b-gold">Ba trang chuyên đề mới</span>
+        <h3 style="margin-top:12px;margin-bottom:8px">Công cụ tra cứu theo từng nghĩa vụ pháp lý</h3>
+        <p>Ngoài bốn công cụ tính phí, ASCO xây riêng công cụ soát chiếu cho ba nhóm khách hàng đang có thay đổi pháp lý lớn: quỹ tín dụng nhân dân, chính quyền cấp xã và chủ đầu tư nhà ở xã hội.</p>
+      </div>
+      <a class="btn btn-navy" href="cong-cu/#chuyen-de">Xem ba trang chuyên đề</a>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 5 TRỤ CỘT DỊCH VỤ =============== -->
+<section id="dich-vu">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Năm trụ cột</div>
+      <h2>Một tổ chức, đủ các nghề mà một dự án cần</h2>
+      <p class="lede" style="margin-top:14px">
+        Phần lớn hãng kiểm toán chỉ có kiểm toán viên. Một dự án lại cần đồng thời người đọc chứng từ, người đọc bản vẽ
+        và người định giá tài sản. ASCO có cả ba trong cùng một tổ chức — không phải thuê ngoài, không phải chờ phối hợp.
+      </p>
+    </div>
+
+    <div class="grid g5" style="gap:18px">
+      <a class="card rv" href="dich-vu/#kiem-toan-du-an">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg></div>
+        <h3>Kiểm toán</h3>
+        <p>Quyết toán dự án hoàn thành · báo cáo tài chính · kiểm toán nội bộ · kiểm toán vốn · dịch vụ bảo đảm.</p>
+      <span class="more">Xem chi tiết →</span></a>
+      <a class="card rv" href="dich-vu/#tham-dinh-gia">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M5 7h14M7 7l-3 6a3.6 3.6 0 0 0 6 0L7 7Zm10 0-3 6a3.6 3.6 0 0 0 6 0l-3-6Z"/></svg></div>
+        <h3>Thẩm định giá</h3>
+        <p>Bất động sản · máy móc thiết bị · phương tiện · doanh nghiệp · tài sản đặc thù và tài sản bảo đảm.</p>
+      <span class="more">Xem chi tiết →</span></a>
+      <a class="card rv" href="dich-vu/#tu-van">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H7l-3 3V4Z"/><path d="M8 9h8M8 12.5h5"/></svg></div>
+        <h3>Tư vấn</h3>
+        <p>Thuế · tài chính · quản trị · hệ thống quản lý tích hợp · bản đồ chiến lược · dịch vụ kế toán.</p>
+      <span class="more">Xem chi tiết →</span></a>
+      <a class="card rv" href="dich-vu/#dao-tao">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></div>
+        <h3>Đào tạo</h3>
+        <p>Huấn luyện kế toán, quản lý dự án, dự toán, đấu thầu, thanh quyết toán cho chính đội ngũ của khách hàng.</p>
+      <span class="more">Xem chi tiết →</span></a>
+      <a class="card rv" href="dich-vu/#cong-nghe">
+        <div class="ico gold"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a4 4 0 0 0-4 4v1a4 4 0 0 0 0 8v1a4 4 0 0 0 8 0v-1a4 4 0 0 0 0-8V6a4 4 0 0 0-4-4Z"/><path d="M12 8v8"/></svg></div>
+        <h3>Công nghệ</h3>
+        <p>Phần mềm kiểm toán dự án ứng dụng AI, và huấn luyện khách hàng đưa AI vào công tác quản trị của chính mình.</p>
+      <span class="more">Xem chi tiết →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- =============== DỰ ÁN TIÊU BIỂU =============== -->
+<section id="du-an" class="alt">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Bằng chứng năng lực</div>
+      <h2>Những công trình ASCO đã đặt bút ký</h2>
+      <p class="lede" style="margin-top:14px">
+        Hơn 8.000 dự án trải bốn lĩnh vực: hàng không, giao thông, xây dựng dân dụng và công nghiệp,
+        nông nghiệp và thuỷ lợi. Dưới đây là một vài công trình tiêu biểu.
+      </p>
+    </div>
+
+    <div class="grid g3" style="margin-bottom:20px">
+      <article class="proj rv">
+        <div class="proj-top"><div class="k">Hàng không</div><h3>Nhà ga hành khách T3<br>Cảng HKQT Tân Sơn Nhất</h3></div>
+        <div class="proj-body">
+          <div class="r"><span>Chủ đầu tư</span><b>Tổng công ty Cảng hàng không Việt Nam</b></div>
+          <div class="r"><span>Địa bàn</span><b>TP. Hồ Chí Minh</b></div>
+          <div class="r"><span>Dịch vụ</span><b>Kiểm toán quyết toán</b></div>
+        </div>
+      </article>
+
+      <article class="proj rv">
+        <div class="proj-top"><div class="k">Đường sắt đô thị</div><h3>Tuyến đường sắt đô thị<br>Nhổn — ga Hà Nội</h3></div>
+        <div class="proj-body">
+          <div class="r"><span>Chủ đầu tư</span><b>Ban QLDA đường sắt đô thị Hà Nội</b></div>
+          <div class="r"><span>Địa bàn</span><b>Hà Nội</b></div>
+          <div class="r"><span>Dịch vụ</span><b>Kiểm toán quyết toán</b></div>
+        </div>
+      </article>
+
+      <article class="proj rv">
+        <div class="proj-top"><div class="k">Cảng biển</div><h3>Cảng cửa ngõ quốc tế<br>Hải Phòng</h3></div>
+        <div class="proj-body">
+          <div class="r"><span>Chủ đầu tư</span><b>Ban QLDA Hàng hải</b></div>
+          <div class="r"><span>Địa bàn</span><b>Hải Phòng</b></div>
+          <div class="r"><span>Dịch vụ</span><b>Kiểm toán quyết toán</b></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="grid g3">
+      <article class="proj rv">
+        <div class="proj-top"><div class="k">Đường bộ cao tốc</div><h3>Cao tốc Nội Bài — Lào Cai<br>và hầm Đèo Cả, Cù Mông</h3></div>
+        <div class="proj-body">
+          <div class="r"><span>Địa bàn</span><b>Lào Cai · Phú Yên · Khánh Hoà · Bình Định</b></div>
+          <div class="r"><span>Dịch vụ</span><b>Kiểm toán quyết toán</b></div>
+        </div>
+      </article>
+
+      <article class="proj rv">
+        <div class="proj-top"><div class="k">Công nghiệp nặng</div><h3>Khu liên hợp gang thép<br>Hoà Phát Dung Quất</h3></div>
+        <div class="proj-body">
+          <div class="r"><span>Địa bàn</span><b>Quảng Ngãi</b></div>
+          <div class="r"><span>Dịch vụ</span><b>Thẩm định giá</b></div>
+        </div>
+      </article>
+
+      <article class="proj rv">
+        <div class="proj-top"><div class="k">Tài sản đặc thù</div><h3>Máy bay Airbus A321-231</h3></div>
+        <div class="proj-body">
+          <div class="r"><span>Loại tài sản</span><b>Tàu bay thương mại</b></div>
+          <div class="r"><span>Dịch vụ</span><b>Thẩm định giá</b></div>
+          <div class="r"><span>Ý nghĩa</span><b>Năng lực định giá tài sản ngoài thông lệ</b></div>
+        </div>
+      </article>
+    </div>
+
+    <p class="rv" style="margin:26px 0 0"><a class="btn btn-navy" href="du-an/">Xem toàn bộ dự án tiêu biểu →</a></p>
+
+    <div class="card rv" style="margin-top:24px;text-align:center">
+      <p class="small" style="margin-bottom:16px">Khách hàng thường xuyên của ASCO</p>
+      <div class="logos">
+        <span>Tập đoàn Điện lực Việt Nam</span>
+        <span>Tổng công ty Cảng hàng không ACV</span>
+        <span>Tập đoàn Than — Khoáng sản</span>
+        <span>Tổng công ty Đường sắt Việt Nam</span>
+        <span>Tập đoàn VNPT</span>
+        <span>Tập đoàn Dầu khí</span>
+        <span>Các Ban QLDA cấp Bộ</span>
+        <span>Sở Nông nghiệp &amp; Môi trường các tỉnh</span>
+        <span>Sở Y tế · Sở Văn hoá</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== KHÁCH HÀNG NÓI GÌ =============== -->
+<section id="khach-hang">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Khách hàng nói gì</div>
+      <h2>Những người đã làm việc trực tiếp với ASCO</h2>
+    </div>
+
+    <div class="grid g3">
+      <div class="quote rv">
+        <p class="q"><span class="fill">[Nội dung nhận xét — lấy từ trang hiện tại của asco.vn]</span></p>
+        <div class="who"><div class="av">PS</div><div><b>Ông Phạm Hồng Sơn</b><span>Nguyên Giám đốc Ban QLDA 2 — Bộ Giao thông vận tải</span></div></div>
+      </div>
+      <div class="quote rv">
+        <p class="q"><span class="fill">[Nội dung nhận xét — lấy từ trang hiện tại của asco.vn]</span></p>
+        <div class="who"><div class="av">HH</div><div><b>PGS.TS. Hoàng Văn Hải</b><span>Thành viên Hội đồng quản trị — Tập đoàn Hoàng Thịnh Đạt</span></div></div>
+      </div>
+      <div class="quote rv">
+        <p class="q"><span class="fill">[Nội dung nhận xét — lấy từ trang hiện tại của asco.vn]</span></p>
+        <div class="who"><div class="av">TA</div><div><b>Ông Nguyễn Thế Anh</b><span>Chủ tịch — GXD</span></div></div>
+      </div>
+    </div>
+    <p class="small rv" style="margin-top:16px">
+      Các ô đánh dấu là nội dung nhận xét đã có sẵn trên asco.vn — chỉ cần chép sang, ASCO không cần viết mới.
+    </p>
+    <p class="rv" style="margin-top:22px"><a class="btn btn-outline" href="ve-asco/">Xem năng lực và chứng nhận của ASCO →</a></p>
+  </div>
+</section>
+
+<!-- =============== TRI THỨC =============== -->
+<section id="tri-thuc" class="alt">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Tri thức — không phải tin nội bộ</div>
+      <h2>Khách hàng tìm ASCO qua quy định, chứ không qua quảng cáo</h2>
+      <p class="lede" style="margin-top:14px">
+        Kế toán trưởng và trưởng ban quản lý dự án lên mạng để tra <b>quy định</b>, không phải để tìm nhà cung cấp.
+        Vì vậy chuyên mục này viết về những gì vừa thay đổi và Quý khách phải làm gì — đó cũng là cách ASCO được tìm thấy.
+      </p>
+    </div>
+
+    <div class="grid g3" style="margin-bottom:20px">
+      <a class="post rv" href="tri-thuc/">
+        <div class="meta"><span class="badge b-new">Mới</span><span>Cập nhật pháp lý</span></div>
+        <h3>Nghị định 193/2026/NĐ-CP về quyết toán vốn đầu tư dự án</h3>
+        <p>Thay thế quy định quyết toán tại Nghị định 254/2025. Chủ đầu tư đang dẫn văn bản cũ trong tờ trình sẽ bị trả hồ sơ.</p>
+        <span class="more">Đọc tiếp →</span>
+      </a>
+      <a class="post rv" href="tri-thuc/">
+        <div class="meta"><span class="badge b-new">Mới</span><span>Cập nhật pháp lý</span></div>
+        <h3>Thông tư 42/2025/TT-NHNN — kiểm toán độc lập quỹ tín dụng nhân dân</h3>
+        <p>Áp dụng từ năm tài chính 2027. Quỹ có tổng tài sản từ 50 tỷ đồng phải làm thêm dịch vụ bảo đảm kiểm soát nội bộ.</p>
+        <span class="more">Đọc tiếp →</span>
+      </a>
+      <a class="post rv" href="tri-thuc/">
+        <div class="meta"><span class="badge b-new">Mới</span><span>Cập nhật pháp lý</span></div>
+        <h3>Mốc 180 ngày với dự án nhà ở xã hội</h3>
+        <p>Theo Nghị định 192/2025, sau nghiệm thu chủ đầu tư có 180 ngày để kiểm toán, quyết toán và chốt giá bán chính thức.</p>
+        <span class="more">Đọc tiếp →</span>
+      </a>
+    </div>
+
+    <div class="grid g3">
+      <a class="post rv" href="ve-asco/#minh-bach">
+        <div class="meta"><span>Báo cáo</span><span>29/12/2025</span></div>
+        <h3>Báo cáo minh bạch 2025</h3>
+        <p>Công bố về cơ cấu tổ chức, hệ thống kiểm soát chất lượng, chính sách độc lập và danh mục khách hàng có lợi ích công chúng.</p>
+        <span class="more">Tải báo cáo →</span>
+      </a>
+      <a class="post rv" href="tri-thuc/">
+        <div class="meta"><span>Chuyên môn</span><span>12/08/2025</span></div>
+        <h3>Xu hướng trí tuệ nhân tạo trong kiểm toán</h3>
+        <p>AI thay đổi cách kiểm toán viên xử lý khối lượng hồ sơ lớn — và ASCO đang ứng dụng vào phần mềm kiểm toán dự án như thế nào.</p>
+        <span class="more">Đọc tiếp →</span>
+      </a>
+      <a class="post rv" href="tri-thuc/">
+        <div class="meta"><span class="badge b-gold">Đăng ký</span><span>Miễn phí</span></div>
+        <h3>Bản tin pháp luật hằng tháng</h3>
+        <p>Mỗi khi có văn bản mới ảnh hưởng tới nghĩa vụ kiểm toán, quyết toán, ASCO gửi bản tóm tắt: đổi gì — phải làm gì — hạn khi nào.</p>
+        <span class="more">Đăng ký nhận →</span>
+      </a>
+    </div>
+    <p class="rv" style="margin-top:26px"><a class="btn btn-navy" href="tri-thuc/">Vào Trung tâm tri thức →</a></p>
+  </div>
+</section>
+
+<!-- =============== VỀ ASCO =============== -->
+<section id="ve-asco">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Vì sao chọn ASCO</div>
+      <h2>Sáu lý do khách hàng quay lại</h2>
+    </div>
+
+    <div class="grid g3">
+      <article class="card rv">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg></div>
+        <h3>Lĩnh vực lõi, không phải nghề tay trái</h3>
+        <p>ASCO thành lập năm 2007 với chiến lược tập trung vào kiểm toán quyết toán dự án hoàn thành. Năm 2021, ASCO là một trong hai công ty kiểm toán có doanh thu lớn nhất Việt Nam về lĩnh vực này theo báo cáo của Bộ Tài chính.</p>
+      </article>
+      <article class="card rv">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20h20M4 20V9l8-6 8 6v11"/><path d="M9 20v-6h6v6"/></svg></div>
+        <h3>Hơn 50 kỹ sư, không chỉ kiểm toán viên</h3>
+        <p>Sai lệch trong quyết toán nằm ở khối lượng và đơn giá — việc của kỹ sư đọc bản vẽ hoàn công, không phải của kế toán. Đây là một trong những đội ngũ kỹ thuật viên lớn nhất trong các công ty kiểm toán tại Việt Nam.</p>
+      </article>
+      <article class="card rv">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5.5L12 2 4 5.5V12c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3>Đủ điều kiện kiểm toán đơn vị có lợi ích công chúng</h3>
+        <p>ASCO thuộc danh sách được Bộ Tài chính chấp thuận kiểm toán đơn vị có lợi ích công chúng, cả lĩnh vực chứng khoán và lĩnh vực khác, với 21 kiểm toán viên hành nghề được Ủy ban Chứng khoán Nhà nước chấp thuận.</p>
+      </article>
+      <article class="card rv">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/></svg></div>
+        <h3>Mười một điểm hiện diện</h3>
+        <p>Nhóm kiểm toán được bố trí từ cơ sở gần dự án nhất — giảm chi phí đi lại, rút ngắn thời gian làm việc tại chỗ và nắm được thực tiễn xử lý hồ sơ của cơ quan quản lý địa phương.</p>
+      </article>
+      <article class="card rv">
+        <div class="ico gold"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a4 4 0 0 0-4 4v1a4 4 0 0 0 0 8v1a4 4 0 0 0 8 0v-1a4 4 0 0 0 0-8V6a4 4 0 0 0-4-4Z"/><path d="M12 8v8"/></svg></div>
+        <h3>Ứng dụng AI vào chuyên môn</h3>
+        <p>Phần mềm kiểm toán dự án bằng AI giúp tăng độ phủ kiểm tra và rút ngắn thời gian xử lý hồ sơ lớn. ASCO cũng huấn luyện khách hàng đưa AI vào công tác quản trị của chính đơn vị mình.</p>
+      </article>
+      <article class="card rv">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M6 21V7l6-4 6 4v14"/><path d="M10 21v-5h4v5"/></svg></div>
+        <h3>Đồng hành sau khi phát hành</h3>
+        <p>ASCO cùng khách hàng giải trình với cơ quan thẩm tra, đoàn thanh tra và Kiểm toán Nhà nước sau khi báo cáo được phát hành — thời điểm khách hàng cần người đứng cạnh nhất.</p>
+      </article>
+    </div>
+
+    <p class="rv" style="margin:26px 0 0"><a class="btn btn-navy" href="ve-asco/">Trang giới thiệu đầy đủ về ASCO →</a></p>
+
+    <div class="card rv" style="margin-top:24px;background:var(--tint);border-color:var(--tint-2)">
+      <h3 style="margin-bottom:10px">Mạng lưới phục vụ toàn quốc</h3>
+      <p style="font-size:15.3px;color:var(--ink-2)">Trụ sở chính tại Hà Nội cùng hệ thống chi nhánh và văn phòng trải ba miền, có nhân sự trực tiếp thực hiện.</p>
+      <div class="net">
+        <span class="hq">Hà Nội — Trụ sở chính</span>
+        <span>TP. Hồ Chí Minh</span><span>Hải Phòng</span><span>Ninh Bình</span><span>Đồng Nai</span><span>Cần Thơ</span>
+        <span>Nghệ An</span><span>Huế</span><span>Đà Nẵng</span><span>Quảng Trị</span><span>Quảng Ngãi</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== TUYỂN DỤNG =============== -->
+<section id="tuyen-dung" class="alt">
+  <div class="wrap">
+    <div class="card rv" style="display:flex;gap:28px;align-items:center;flex-wrap:wrap;padding:34px">
+      <div style="flex:1 1 380px">
+        <div class="eyebrow">Tuyển dụng</div>
+        <h2 style="font-size:clamp(23px,2.8vw,31px)">Nghề kiểm toán dự án dạy bạn đọc được cả chứng từ lẫn bản vẽ</h2>
+        <p class="lede" style="margin-top:14px">
+          ASCO tuyển kiểm toán viên, kỹ sư xây dựng — giao thông — thuỷ lợi, thẩm định viên về giá và trợ lý kiểm toán
+          cho cả 11 điểm hiện diện. Môi trường được đào tạo bài bản và làm việc trên những công trình lớn nhất nước.
+        </p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-navy" href="tuyen-dung/">Xem vị trí đang tuyển</a>
+        <a class="btn btn-outline" href="mailto:asco@asco.vn">Gửi hồ sơ tự do</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== TIN CẬY & MINH BẠCH =============== -->
+<section id="minh-bach">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Tin cậy &amp; minh bạch</div>
+      <h2>Những gì có thể kiểm chứng được, ASCO công bố</h2>
+    </div>
+
+    <div class="grid g4" style="gap:16px">
+      <div class="card rv">
+        <div class="badge b-navy">Bộ Tài chính</div>
+        <h3 style="margin-top:12px;font-size:17px">Chấp thuận kiểm toán đơn vị có lợi ích công chúng</h3>
+        <p class="small" style="margin-top:8px">Cả lĩnh vực chứng khoán và lĩnh vực khác.</p>
+      </div>
+      <div class="card rv">
+        <div class="badge b-navy">UBCKNN</div>
+        <h3 style="margin-top:12px;font-size:17px">21 kiểm toán viên hành nghề được chấp thuận</h3>
+        <p class="small" style="margin-top:8px">Danh sách công khai, tra cứu được theo từng năm.</p>
+      </div>
+      <div class="card rv">
+        <div class="badge b-gold">Công bố</div>
+        <h3 style="margin-top:12px;font-size:17px">Báo cáo minh bạch 2025</h3>
+        <p class="small" style="margin-top:8px">Cơ cấu tổ chức, kiểm soát chất lượng, chính sách độc lập.</p>
+      </div>
+      <div class="card rv">
+        <div class="badge b-navy">VACPA</div>
+        <h3 style="margin-top:12px;font-size:17px">Hội viên Hội Kiểm toán viên hành nghề Việt Nam</h3>
+        <p class="small" style="margin-top:8px">Chịu soát xét chất lượng định kỳ của Hội và Bộ Tài chính.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== LIÊN HỆ =============== -->
+<section class="cta" id="lien-he">
+  <div class="wrap">
+    <div class="cta-grid">
+      <div class="rv">
+        <div class="eyebrow" style="color:var(--gold-hi)">Bắt đầu với ASCO</div>
+        <h2>Gửi yêu cầu, ASCO phản hồi trong 2 giờ làm việc</h2>
+        <p class="lede" style="margin-top:16px">
+          Quý khách không cần chuẩn bị sẵn hồ sơ. Chỉ cần cho biết loại công việc và quy mô,
+          ASCO sẽ gửi lại phạm vi công việc, mức phí dự kiến và danh mục hồ sơ cần chuẩn bị.
+        </p>
+
+        <div style="margin-top:26px">
+          <a class="cc" href="tel:02437930960">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.4 2.1L8 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+            <span><b>024 3793 0960</b><span>Tổng đài — giờ hành chính</span></span>
+          </a>
+          <a class="cc" href="mailto:asco@asco.vn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 6.5L21 6"/></svg>
+            <span><b>asco@asco.vn</b><span>Gửi hồ sơ, đề nghị báo giá, mời thầu</span></span>
+          </a>
+          <a class="cc" href="#ve-asco">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/></svg>
+            <span><b>Trụ sở chính — Hà Nội</b><span>Số 2, ngõ 308 Lê Trọng Tấn, phường Định Công</span></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="form-card rv">
+        <h3>Yêu cầu báo giá</h3>
+        <p class="small" style="margin-top:8px">Các trường có dấu <span class="req">*</span> là bắt buộc.</p>
+        <form id="asForm" novalidate>
+          <div class="form-grid">
+            <div>
+              <label for="fTen">Họ và tên <span class="req">*</span></label>
+              <input class="inp" id="fTen" name="ten" type="text" required autocomplete="name">
+            </div>
+            <div>
+              <label for="fDv">Đơn vị công tác</label>
+              <input class="inp" id="fDv" name="donvi" type="text" autocomplete="organization">
+            </div>
+            <div>
+              <label for="fSdt">Điện thoại <span class="req">*</span></label>
+              <input class="inp" id="fSdt" name="dienthoai" type="tel" required autocomplete="tel" inputmode="tel">
+            </div>
+            <div>
+              <label for="fMail">Email</label>
+              <input class="inp" id="fMail" name="email" type="email" autocomplete="email" inputmode="email">
+            </div>
+            <div class="full">
+              <label for="fDich">Dịch vụ quan tâm <span class="req">*</span></label>
+              <select class="inp" id="fDich" name="dichvu" required>
+                <option value="">— Chọn dịch vụ —</option>
+                <option>Kiểm toán quyết toán dự án hoàn thành</option>
+                <option>Kiểm toán báo cáo tài chính</option>
+                <option>Kiểm toán báo cáo tài chính quỹ tín dụng nhân dân</option>
+                <option>Kiểm toán dự án nhà ở xã hội</option>
+                <option>Thẩm định giá tài sản</option>
+                <option>Thẩm định giá doanh nghiệp</option>
+                <option>Kiểm toán nội bộ · kiểm toán vốn</option>
+                <option>Tư vấn thuế · tài chính · dịch vụ kế toán</option>
+                <option>Đào tạo tại đơn vị</option>
+                <option>Nội dung khác</option>
+              </select>
+            </div>
+            <div class="full">
+              <label for="fQuy">Quy mô dự án hoặc đơn vị</label>
+              <select class="inp" id="fQuy" name="quymo">
+                <option value="">— Chọn quy mô (không bắt buộc) —</option>
+                <option>Dưới 5 tỷ đồng</option>
+                <option>Từ 5 đến 50 tỷ đồng</option>
+                <option>Từ 50 đến 500 tỷ đồng</option>
+                <option>Từ 500 đến 1.000 tỷ đồng</option>
+                <option>Trên 1.000 tỷ đồng</option>
+              </select>
+            </div>
+            <div class="full">
+              <label for="fNd">Nội dung cần trao đổi</label>
+              <textarea class="inp" id="fNd" name="noidung" placeholder="Ví dụ: dự án đã nghiệm thu tháng 5/2026, cần kiểm toán quyết toán trước 30/9/2026."></textarea>
+            </div>
+          </div>
+          <button class="btn btn-navy btn-lg" type="submit" style="width:100%;margin-top:18px">Gửi yêu cầu</button>
+          <div class="form-msg" id="asMsg" role="status" aria-live="polite"></div>
+          <p class="small" style="margin-top:14px">
+            Yêu cầu được chuyển thẳng về hộp thư <b>asco@asco.vn</b>. Thông tin chỉ dùng để liên hệ
+            và báo giá, không chia sẻ cho bên thứ ba.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== DẢI KÊU GỌI RÚT GỌN =============== -->
+<section class="cta-slim">
+  <div class="wrap">
+    <div class="box rv">
+      <div style="flex:1 1 420px">
+        <div class="eyebrow">Bắt đầu với ASCO</div>
+        <h2>Gửi yêu cầu, ASCO phản hồi trong 2 giờ làm việc</h2>
+        <p>Quý khách không cần chuẩn bị sẵn hồ sơ. Chỉ cần cho biết loại công việc và quy mô, ASCO gửi lại phạm vi công việc, mức phí dự kiến và danh mục hồ sơ cần chuẩn bị.</p>
+      </div>
+      <div class="acts">
+        <a class="btn btn-navy btn-lg" href="#lien-he">Nhận báo giá</a>
+        <a class="btn btn-outline btn-lg" href="tel:02437930960">024 3793 0960</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== CHÂN TRANG =============== -->
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <img class="flogo" src="data:image/png;base64,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" alt="ASCO">
+        <p style="font-size:14.6px;max-width:38ch">
+          Hãng Kiểm toán và Định giá ASCO — thành lập năm 2007. Kiểm toán · Thẩm định giá · Tư vấn · Đào tạo · Công nghệ.
+        </p>
+        <div class="soc">
+          <a href="https://www.facebook.com/ascofirm" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1Z"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12s0-3.3-.4-4.9a2.6 2.6 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.3A2.6 2.6 0 0 0 2.4 7.1C2 8.7 2 12 2 12s0 3.3.4 4.9a2.6 2.6 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.3a2.6 2.6 0 0 0 1.8-1.8C22 15.3 22 12 22 12ZM10 15V9l5.2 3L10 15Z"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 3c.4 2 1.6 3.4 3.5 3.7v2.8c-1.3.1-2.6-.3-3.7-1v5.9a5.4 5.4 0 1 1-5.4-5.4c.3 0 .6 0 .9.1v2.9a2.5 2.5 0 1 0 1.7 2.4V3h3Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Dịch vụ</h4>
+        <ul>
+          <li><a href="dich-vu/#kiem-toan-du-an">Kiểm toán quyết toán dự án</a></li>
+          <li><a href="dich-vu/#kiem-toan-bctc">Kiểm toán báo cáo tài chính</a></li>
+          <li><a href="dich-vu/#tham-dinh-gia">Thẩm định giá</a></li>
+          <li><a href="dich-vu/#tu-van">Tư vấn &amp; dịch vụ kế toán</a></li>
+          <li><a href="dich-vu/#dao-tao">Đào tạo</a></li>
+          <li><a href="dich-vu/#cong-nghe">Công nghệ &amp; AI</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Công cụ &amp; Tri thức</h4>
+        <ul>
+          <li><a href="cong-cu/">Tính phí kiểm toán dự án</a></li>
+          <li><a href="cong-cu/#tham-tra">Tính phí thẩm tra quyết toán</a></li>
+          <li><a href="tri-thuc/">Cập nhật pháp lý</a></li>
+          <li><a href="tri-thuc/#van-ban">Thư viện văn bản</a></li>
+          <li><a href="du-an/">Dự án tiêu biểu</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Về ASCO</h4>
+        <ul>
+          <li><a href="ve-asco/">Năng lực &amp; chứng nhận</a></li>
+          <li><a href="ve-asco/#minh-bach">Báo cáo minh bạch</a></li>
+          <li><a href="ve-asco/#mang-luoi">Mạng lưới văn phòng</a></li>
+          <li><a href="tuyen-dung/">Tuyển dụng</a></li>
+          <li><a href="#lien-he">Liên hệ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="f-bot">
+      <span>© 2026 Hãng Kiểm toán và Định giá ASCO. Giữ toàn quyền.</span>
+      <span>024 3793 0960 · asco@asco.vn · Số 2, ngõ 308 Lê Trọng Tấn, Hà Nội</span>
+    </div>
+  </div>
+</footer>
+
+<!-- =============== THANH DÍNH DI ĐỘNG =============== -->
+<div class="mbar">
+  <a class="btn btn-outline" href="tel:02437930960">Gọi ASCO</a>
+  <a class="btn btn-gold" href="cong-cu/">Tính phí</a>
+  <a class="btn btn-navy" href="#lien-he">Nhận báo giá</a>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"AccountingService",
+  "name":"Hãng Kiểm toán và Định giá ASCO",
+  "alternateName":"ASCO",
+  "url":"https://asco.vn/",
+  "foundingDate":"2007",
+  "email":"asco@asco.vn",
+  "telephone":"+842437930960",
+  "address":{"@type":"PostalAddress","streetAddress":"Số 2, ngõ 308 Lê Trọng Tấn","addressLocality":"Hà Nội","addressCountry":"VN"},
+  "areaServed":"VN",
+  "description":"Kiểm toán báo cáo quyết toán dự án hoàn thành, kiểm toán báo cáo tài chính, thẩm định giá, tư vấn, đào tạo. Một trong 5 hãng kiểm toán dự án lớn nhất Việt Nam."
+}
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- giao diện sáng / tối ---------- */
+  var asRoot = document.documentElement;
+  var asBtn  = document.getElementById('themeBtn');
+  var asSaved = null;
+  try{ asSaved = localStorage.getItem('asco-theme'); }catch(e){}
+  if(asSaved === 'dark' || asSaved === 'light') asRoot.setAttribute('data-theme', asSaved);
+
+  function asIsDark(){
+    var t = asRoot.getAttribute('data-theme');
+    if(t) return t === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  if(asBtn){
+    asBtn.addEventListener('click', function(){
+      var next = asIsDark() ? 'light' : 'dark';
+      asRoot.setAttribute('data-theme', next);
+      try{ localStorage.setItem('asco-theme', next); }catch(e){}
+    });
+  }
+
+  /* ---------- hiện dần khi cuộn ---------- */
+  var asRv = [].slice.call(document.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window && asRv.length){
+    var asObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en, i){
+        if(!en.isIntersecting) return;
+        en.target.style.transitionDelay = Math.min(i, 5) * 70 + 'ms';
+        en.target.classList.add('in');
+        asObs.unobserve(en.target);
+      });
+    }, {rootMargin:'0px 0px -10% 0px', threshold:.08});
+    asRv.forEach(function(el){ asObs.observe(el); });
+  }else{
+    asRv.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- bộ lọc dùng chung ----------
+     Đánh dấu vùng lọc bằng [data-loc], nút bằng [data-loc-nut="khoá"],
+     mục bằng [data-nhom="khoá1 khoá2"]. Không có JS thì mọi mục vẫn hiện. */
+  [].slice.call(document.querySelectorAll('[data-loc]')).forEach(function(vung){
+    var nut  = [].slice.call(vung.querySelectorAll('[data-loc-nut]'));
+    var muc  = [].slice.call(vung.querySelectorAll('[data-nhom]'));
+    var trong = vung.querySelector('[data-loc-trong]');
+    if(!nut.length || !muc.length) return;
+
+    function loc(khoa){
+      var hien = 0;
+      muc.forEach(function(m){
+        var thuoc = khoa === 'tat-ca' || (' ' + m.getAttribute('data-nhom') + ' ').indexOf(' ' + khoa + ' ') >= 0;
+        m.classList.toggle('is-off', !thuoc);
+        if(thuoc) hien++;
+      });
+      nut.forEach(function(n){
+        n.setAttribute('aria-pressed', String(n.getAttribute('data-loc-nut') === khoa));
+      });
+      if(trong) trong.classList.toggle('is-off', hien > 0);
+    }
+    nut.forEach(function(n){
+      n.addEventListener('click', function(){ loc(n.getAttribute('data-loc-nut')); });
+    });
+    loc('tat-ca');
+  });
+
+  /* ---------- biểu mẫu (chỉ có trên trang chủ) ---------- */
+  var asForm = document.getElementById('asForm');
+  var asMsg  = document.getElementById('asMsg');
+  function asShow(kind, html){
+    if(!asMsg) return;
+    asMsg.className = 'form-msg show ' + kind;
+    asMsg.innerHTML = html;
+  }
+
+  var AS_HOP_THU = 'asco@asco.vn';
+  var AS_CONG    = 'https://formsubmit.co/ajax/' + AS_HOP_THU;
+
+  function asMoThu(dich, body){
+    window.location.href = 'mailto:' + AS_HOP_THU + '?subject=' +
+      encodeURIComponent('Yêu cầu báo giá — ' + dich) + '&body=' + encodeURIComponent(body);
+  }
+
+  if(asForm){
+    asForm.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var ten  = asForm.ten.value.trim();
+      var sdt  = asForm.dienthoai.value.trim();
+      var dich = asForm.dichvu.value;
+      if(!ten || !sdt || !dich){
+        asShow('err', 'Xin vui lòng điền đủ <b>họ tên</b>, <b>điện thoại</b> và <b>dịch vụ quan tâm</b>.');
+        return;
+      }
+      if(!/^[0-9\s.+()-]{9,15}$/.test(sdt)){
+        asShow('err', 'Số điện thoại chưa đúng định dạng. Xin vui lòng kiểm tra lại.');
+        return;
+      }
+
+      var duLieu = {
+        'Họ và tên': ten,
+        'Đơn vị công tác': asForm.donvi.value.trim() || '(không điền)',
+        'Điện thoại': sdt,
+        'Email': asForm.email.value.trim() || '(không điền)',
+        'Dịch vụ quan tâm': dich,
+        'Quy mô': asForm.quymo.value || '(không điền)',
+        'Nội dung': asForm.noidung.value.trim() || '(không điền)',
+        _subject: 'Yêu cầu báo giá từ asco.vn — ' + dich,
+        _template: 'table',
+        _captcha: 'false'
+      };
+      var body = Object.keys(duLieu).filter(function(k){ return k.charAt(0) !== '_'; })
+        .map(function(k){ return k + ': ' + duLieu[k]; }).join('\n');
+
+      var nut = asForm.querySelector('button[type="submit"]');
+      if(nut){ nut.disabled = true; nut.textContent = 'Đang gửi…'; }
+      asShow('ok', 'Đang gửi yêu cầu…');
+
+      fetch(AS_CONG, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+        body: JSON.stringify(duLieu)
+      })
+      .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function(){
+        asForm.reset();
+        asShow('ok', '<b>Đã gửi tới ' + AS_HOP_THU + '.</b> ASCO sẽ phản hồi trong 2 giờ làm việc. ' +
+                     'Nếu cần gấp, xin gọi <b>024 3793 0960</b>.');
+        if(nut){ nut.textContent = 'Đã gửi ✓'; }
+      })
+      .catch(function(){
+        asShow('err', 'Chưa gửi tự động được. Cửa sổ thư điện tử sẽ mở ra để Quý khách gửi thẳng tới <b>' +
+                      AS_HOP_THU + '</b>. Nếu không mở được, xin gọi <b>024 3793 0960</b>.');
+        if(nut){ nut.disabled = false; nut.textContent = 'Gửi yêu cầu'; }
+        asMoThu(dich, body);
+      });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
